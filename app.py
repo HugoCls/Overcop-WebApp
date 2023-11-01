@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+from sqlalchemy import create_engine
+
+engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_USERNAME"]}@{st.secrets["VPS_IP"]}/overcop')
 
 st.set_page_config(
     page_title="Overcop Data",
@@ -53,6 +56,8 @@ data_logs = [
 
 # Créer un DataFrame
 df_stock = pd.DataFrame(stock_data)
+
+df_stock = pd.read_sql("SELECT * FROM Database", con=engine)
 
 # Sidebar pour la sélection de la chaussure
 st.sidebar.title("Historique des prix")
