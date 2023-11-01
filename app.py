@@ -10,7 +10,7 @@ st.set_page_config(
     page_icon="data/icon.jpg",
     layout="centered",
 )
-
+"""
 stock_data = [
     {"Name": "Chaussure A", "Size": 38, "Price":120, "Image": "https://cdn.shopify.com/s/files/1/2358/2817/files/nike-dunk-low-wmns-cacao-wow_20628849_46151291_20482.png?v=1691768028&width=1940%201940w"},
     {"Name": "Chaussure A", "Size": 39, "Price":120, "Image": "https://cdn.shopify.com/s/files/1/2358/2817/files/nike-dunk-low-wmns-cacao-wow_20628849_46151291_20482.png?v=1691768028&width=1940%201940w"},
@@ -20,6 +20,9 @@ stock_data = [
     {"Name": "Chaussure B", "Size": 40, "Price":120, "Image": "https://cdn.shopify.com/s/files/1/2358/2817/files/nike-dunk-low-wmns-cacao-wow_20628849_46151291_20482.png?v=1691768028&width=1940%201940w"},
 ]
 
+# Créer un DataFrame
+df_stock = pd.DataFrame(stock_data)
+"""
 # Données simulées
 data_logs = [
     {"ProcessingDate": "2023-01-01", "Name": "Chaussure A", "Size": 38, "Price": 100},
@@ -53,9 +56,6 @@ data_logs = [
     {"ProcessingDate": "2023-01-04", "Name": "Chaussure B", "Size": 40, "Price": 105},
     {"ProcessingDate": "2023-01-05", "Name": "Chaussure B", "Size": 40, "Price": 98}
 ]
-
-# Créer un DataFrame
-df_stock = pd.DataFrame(stock_data)
 
 df_stock = pd.read_sql("SELECT * FROM Database", con=engine)
 
