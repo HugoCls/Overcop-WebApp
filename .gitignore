@@ -1,1 +1,3 @@
 save_data.py
+.streamlit
+__pycache__/*
