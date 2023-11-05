@@ -5,9 +5,9 @@ from sqlalchemy import create_engine
 
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
-df_stock = pd.read_sql("SELECT * FROM Database", con=engine)
+df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
 
-df_logs = pd.read_sql("SELECT * FROM Priceslogs", con=engine)
+df_logs = pd.read_sql("SELECT * FROM `Priceslogs`", con=engine)
 
 chaussures = df_stock['Name'].unique()
 
