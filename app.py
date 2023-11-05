@@ -87,21 +87,22 @@ else:
 
 for size in filtered_df_stock['Size'].unique():
     
-    size_data = filtered_df_logs[filtered_df_logs['Size'] == size]
+    if size is not None:
+        size_data = filtered_df_logs[filtered_df_logs['Size'] == size]
 
-    if len(size_data) >= 1:
-        last_update = size_data['ProcessingDate'].max()
-    else:
-        last_update = None
+        if len(size_data) >= 1:
+            last_update = size_data['ProcessingDate'].max()
+        else:
+            last_update = None
 
-    resume_line = {
-        "Size": [size],
-        "Last Update": [last_update],
-        "Current Price": [filtered_df_stock[filtered_df_stock["Size"] == size]["Price"].iloc[0]],
-        "Nb of Updates": [len(size_data)],
-        }
+        resume_line = {
+            "Size": [size],
+            "Last Update": [last_update],
+            "Current Price": [filtered_df_stock[filtered_df_stock["Size"] == size]["Price"].iloc[0]],
+            "Nb of Updates": [len(size_data)],
+            }
 
-    resume_df = pd.concat([pd.DataFrame(resume_line), resume_df], ignore_index=True)
+        resume_df = pd.concat([pd.DataFrame(resume_line), resume_df], ignore_index=True)
 
 st.markdown("**Résumé**")
 
