@@ -3,11 +3,25 @@ import pandas as pd
 import plotly.graph_objects as go
 from sqlalchemy import create_engine
 
+def format_name(name):
+    name = name.lower().replace('\u00a0',' ').replace('-',' ').replace('_',' ').replace('copy of ','').replace('copie de ', '')
+
+    for mark in ['ugg', 'yeezy', 'nike', 'new balance', 'air jordan', 'jordan']:
+
+        name = name.replace(f'{mark} {mark}', f'{mark}')
+
+    return name
+
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
 df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
 
 df_logs = pd.read_sql("SELECT * FROM `Priceslogs`", con=engine)
+
+# Appliquez la fonction format_name aux colonnes Name de df_stock et df_logs
+df_stock['Name'] = df_stock['Name'].apply(lambda x: format_name(x).title() if pd.notna(x) else x)
+
+df_logs['Name'] = df_logs['Name'].apply(lambda x: format_name(x).title() if pd.notna(x) else x)
 
 chaussures = df_stock['Name'].unique()
 
@@ -17,17 +31,27 @@ st.set_page_config(
     page_title="Overcop Data",
     page_icon="data/icon.jpg",
     layout="centered",
+    initial_sidebar_state="expanded",
 )
 
 # Sidebar pour la sélection de la chaussure
 st.sidebar.title("Historique des prix")
 
-selected_chaussure = st.sidebar.selectbox("Sélectionnez une chaussure", chaussures)
+# Divisez la barre latérale en deux colonnes
+col1, col2 = st.sidebar.columns([3, 1])
+
+# Première boîte de sélection pour la chaussure
+selected_chaussure = col1.selectbox("Sélectionnez une chaussure", chaussures)
 
 sizes = df_stock[df_stock['Name'] == selected_chaussure]['Size'].unique()
 
-# Afficher l'image de la chaussure
-image_url = df_stock[df_stock['Name'] == selected_chaussure].iloc[0]['Image']
+# Deuxième boîte de sélection pour la taille
+selected_size = col2.selectbox("Taille", sizes)
+
+if len(df_stock[df_stock['Name'] == selected_chaussure]) >= 1:
+    image_url = df_stock[df_stock['Name'] == selected_chaussure].iloc[0]['Image']
+else:
+    image_url = "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
 
 st.sidebar.image(image_url, caption=selected_chaussure, use_column_width=True)
 
@@ -38,6 +62,28 @@ filtered_df_stock = df_stock[df_stock['Name'] == selected_chaussure]
 
 # Créer un graphique pour chaque taille avec des points reliés par des lignes
 fig = go.Figure()
+
+selected_size_data = filtered_df_logs[filtered_df_logs['Size'] == selected_size]
+
+if len(selected_size_data) >= 1:
+
+    fig.add_trace(go.Scatter(
+        x=selected_size_data['ProcessingDate'],
+        y=selected_size_data['Price'],
+        mode='lines+markers',
+        name=f'Taille {selected_size}',
+    ))
+
+    fig.update_layout(
+        xaxis_title="Date",
+        yaxis_title="Prix"
+    )
+    st.markdown(f"**Évolution des prix pour {selected_chaussure}, {selected_size}**")
+    # Afficher le graphique
+    st.plotly_chart(fig)
+
+else:
+    st.image("https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg", caption=f"Évolution des prix pour {selected_chaussure}, {selected_size}")
 
 for size in filtered_df_stock['Size'].unique():
     
@@ -57,22 +103,6 @@ for size in filtered_df_stock['Size'].unique():
 
     resume_df = pd.concat([pd.DataFrame(resume_line), resume_df], ignore_index=True)
 
-    if len(size_data) >= 1:
-
-        fig.add_trace(go.Scatter(
-            x=size_data['ProcessingDate'],
-            y=size_data['Price'],
-            mode='lines+markers',
-            name=f'Taille {size}',
-        ))
-
-fig.update_layout(
-    title=f"Évolution des prix pour {selected_chaussure}",
-    xaxis_title="Date",
-    yaxis_title="Prix"
-)
-
-# Afficher le graphique
-st.plotly_chart(fig)
+st.markdown("**Résumé**")
 
 st.markdown(resume_df.sort_values("Size", ascending=False).style.hide(axis="index").to_html(), unsafe_allow_html=True)
