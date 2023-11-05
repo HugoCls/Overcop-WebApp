@@ -10,6 +10,7 @@ st.set_page_config(
     page_icon="data/icon.jpg",
     layout="centered",
 )
+
 """
 stock_data = [
     {"Name": "Chaussure A", "Size": 38, "Price":120, "Image": "https://cdn.shopify.com/s/files/1/2358/2817/files/nike-dunk-low-wmns-cacao-wow_20628849_46151291_20482.png?v=1691768028&width=1940%201940w"},
