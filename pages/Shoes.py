@@ -1,8 +1,11 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+
 from sqlalchemy import create_engine
 
+engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
+    
 def format_name(name):
     name = name.lower().replace('\u00a0',' ').replace('-',' ').replace('_',' ').replace('copy of ','').replace('copie de ', '')
 
@@ -12,11 +15,22 @@ def format_name(name):
 
     return name
 
-engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
+st.markdown("# Shoes 👟")
+st.sidebar.markdown("# Shoes 👟")
 
 df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
 
-df_logs = pd.read_sql("SELECT * FROM `Priceslogs`", con=engine)
+query = """
+WITH all_logs AS (
+SELECT
+	*,
+	ROW_NUMBER() OVER (PARTITION BY ProcessingDate, Name, Size ORDER BY ID DESC) AS rn
+FROM Priceslogs
+)
+SELECT * FROM all_logs WHERE rn = 1
+"""
+
+df_logs = pd.read_sql(query, con=engine)
 
 # Appliquez la fonction format_name aux colonnes Name de df_stock et df_logs
 df_stock['Name'] = df_stock['Name'].apply(lambda x: format_name(x).title() if pd.notna(x) else x)
@@ -26,13 +40,6 @@ df_logs['Name'] = df_logs['Name'].apply(lambda x: format_name(x).title() if pd.n
 chaussures = df_stock['Name'].unique()
 
 resume_df = pd.DataFrame(columns=["Size", "Last Update", "Current Price", "Nb of Updates"])
-
-st.set_page_config(
-    page_title="Overcop Data",
-    page_icon="data/icon.jpg",
-    layout="centered",
-    initial_sidebar_state="expanded",
-)
 
 # Sidebar pour la sélection de la chaussure
 st.sidebar.title("Historique des prix")
