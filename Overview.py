@@ -192,4 +192,5 @@ for name in name_size_dict:
         st.image(image_url, caption=format_name(name).title(), use_column_width=True)
         
     with col2:
-        st.dataframe(df, hide_index=True)
+        st.table(df)
+        #st.dataframe(df, hide_index=True)
