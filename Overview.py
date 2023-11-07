@@ -22,11 +22,73 @@ st.set_page_config(
     page_title="Overcop Data",
     page_icon="data/icon.jpg",
     layout="centered",
-    initial_sidebar_state="expanded",
+    #initial_sidebar_state="expanded",
 )
 
 st.markdown("# Overview 📈")
 st.sidebar.markdown("# Overview 📈")
+custom_css = '''
+<style>
+    .palettecontainer {
+        display: flex;
+        align-items: center;
+    }
+
+    .palettecolordivcon {
+        padding: 0;
+        border: 0;
+        width: auto;
+    }
+
+    .palettecolordiv {
+        height: 96px;
+        width: 20%;
+    }
+
+    .palettecolordiv, .palettecolordivc {
+        color: white;
+        float: left;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        text-shadow: 2px 2px 2px #333133;
+    }
+
+    .palettecolordivc {
+        height: 20px;
+        width: 20%;
+    }
+</style>
+'''
+
+# Définissez les couleurs et les explications
+colors = [["#10ef99",' '], ["#7ef6c8", '‎'], ["#b7ffe3", ' ‎'], ["#e0fff3", '‎ '], ["#f8fffc",'  '], ["#06e0f8", '‎  '], ["#7ee9f5", ' ‎ '], ["#adf0f7", '  ‎'], ["#dafafd", '‎‎'], ["#f6feff",'‎‎ ']]
+
+descriptions = ['1-2j', '2-3j', '3-5j', '5-10j', '10j+']
+
+palette_html = f'''
+<div class="palettecontainer">
+    <span style="margin-right: 12px;">Custom</span>
+    <div class="palettecolordivc" title="{descriptions[0]}" style="background-color:{colors[0][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[1]}" style="background-color:{colors[1][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[2][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[3][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[4][0]}"></div>
+</div>
+<div class="palettecontainer">
+    <span style="margin-right: 12px;">Displayed</span>
+    <div class="palettecolordivc" title="{descriptions[0]}" style="background-color:{colors[5][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[1]}" style="background-color:{colors[6][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[7][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[8][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[9][0]}"></div>
+</div>
+'''
+
+st.markdown(custom_css, unsafe_allow_html=True)
+
+st.sidebar.write(palette_html, unsafe_allow_html=True)
+st.sidebar.write("**Newer >>> Older**")
 
 df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
 
@@ -46,28 +108,11 @@ name_size_dict = {name: [size for size in sizes if size is not None] for name, s
 N = max(len(sizes) for sizes in name_size_dict.values())
 
 def add_colors(state):
+    for color in colors:
+        if state == color[1]:
+            return f'background-color: {color[0]}'
 
-    green_colors = ["#85ff99", "#407d4a", "#294f2f"]
-
-    blue_colors = ["#83c8fc", "#4c7391", "#314b5e"]
-
-
-    if state == ' ':
-        color = blue_colors[0]
-    elif state == '  ':
-        color = blue_colors[1]
-    elif state == '   ':
-        color = blue_colors[2]
-    elif state == '‎':
-        color = green_colors[0]
-    elif state == ' ‎':
-        color = green_colors[1]
-    elif state == '  ‎':
-        color = green_colors[2]
-    else:
-        color = 'black'
-
-    return f'background-color: {color}'
+    return 'background-color: black'
 
 def determine_color(state_and_last_date):
     if state_and_last_date is None:
@@ -80,23 +125,31 @@ def determine_color(state_and_last_date):
 
         date_difference = most_recent_date - last_date
 
-        thresholds = [timedelta(days=2), timedelta(days=5)]
+        thresholds = [timedelta(days=2), timedelta(days=3), timedelta(days=5), timedelta(days=10)]
 
         if state == "None" or state == "displayed":
-            if date_difference > thresholds[1]:
-                return '   '
+            if date_difference < thresholds[1]:
+                return colors[0][0]
             elif thresholds[0] <= date_difference <= thresholds[1]:
-                return '  '
+                return colors[1][0]
+            elif thresholds[1] <= date_difference <= thresholds[2]:
+                return colors[2][0]
+            elif thresholds[2] <= date_difference <= thresholds[3]:
+                return colors[3][0]
             else:
-                return ' '
+                return colors[4][0]
 
         elif state == "custom":
-            if date_difference > thresholds[1]:
-                return "  ‎"
+            if date_difference < thresholds[1]:
+                return colors[5][0]
             elif thresholds[0] <= date_difference <= thresholds[1]:
-                return " ‎"
+                return colors[6][0]
+            elif thresholds[1] <= date_difference <= thresholds[2]:
+                return colors[7][0]
+            elif thresholds[2] <= date_difference <= thresholds[3]:
+                return colors[8][0]
             else:
-                return "‎"
+                return colors[9][0]
         else:
             return ''
     
