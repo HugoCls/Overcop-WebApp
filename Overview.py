@@ -129,27 +129,27 @@ def determine_color(state_and_last_date):
 
         if state == "None" or state == "displayed":
             if date_difference < thresholds[1]:
-                return colors[0][0]
+                return colors[0][1]
             elif thresholds[0] <= date_difference <= thresholds[1]:
-                return colors[1][0]
+                return colors[1][1]
             elif thresholds[1] <= date_difference <= thresholds[2]:
-                return colors[2][0]
+                return colors[2][1]
             elif thresholds[2] <= date_difference <= thresholds[3]:
-                return colors[3][0]
+                return colors[3][1]
             else:
-                return colors[4][0]
+                return colors[4][1]
 
         elif state == "custom":
             if date_difference < thresholds[1]:
-                return colors[5][0]
+                return colors[5][1]
             elif thresholds[0] <= date_difference <= thresholds[1]:
-                return colors[6][0]
+                return colors[6][1]
             elif thresholds[1] <= date_difference <= thresholds[2]:
-                return colors[7][0]
+                return colors[7][1]
             elif thresholds[2] <= date_difference <= thresholds[3]:
-                return colors[8][0]
+                return colors[8][1]
             else:
-                return colors[9][0]
+                return colors[9][1]
         else:
             return ''
     
@@ -172,7 +172,7 @@ for name in name_size_dict:
 
     df = pd.DataFrame(row)
 
-    df = df.style.applymap(add_colors, subset=columns).hide(level=1)
+    df = df.style.map(add_colors, subset=columns).hide(level=1)
 
     col1, col2 = st.columns([1, 8])
     
