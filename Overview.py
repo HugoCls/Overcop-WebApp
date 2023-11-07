@@ -68,20 +68,20 @@ descriptions = ['1-2j', '2-3j', '3-5j', '5-10j', '10j+']
 
 palette_html = f'''
 <div class="palettecontainer">
-    <span style="margin-right: 12px;">Custom</span>
     <div class="palettecolordivc" title="{descriptions[0]}" style="background-color:{colors[0][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[1]}" style="background-color:{colors[1][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[2][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[3][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[4][0]}"></div>
+    <span style="margin-left: 12px;">Custom</span>
 </div>
 <div class="palettecontainer">
-    <span style="margin-right: 12px;">Displayed</span>
     <div class="palettecolordivc" title="{descriptions[0]}" style="background-color:{colors[5][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[1]}" style="background-color:{colors[6][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[7][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[8][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[9][0]}"></div>
+    <span style="margin-left: 12px;">Displayed</span>
 </div>
 '''
 
@@ -127,7 +127,7 @@ def determine_color(state_and_last_date):
 
         thresholds = [timedelta(days=2), timedelta(days=3), timedelta(days=5), timedelta(days=10)]
 
-        if state == "None" or state == "displayed":
+        if state == "custom":
             if date_difference < thresholds[1]:
                 return colors[0][1]
             elif thresholds[0] <= date_difference <= thresholds[1]:
@@ -139,7 +139,7 @@ def determine_color(state_and_last_date):
             else:
                 return colors[4][1]
 
-        elif state == "custom":
+        elif state == "None" or state == "displayed":
             if date_difference < thresholds[1]:
                 return colors[5][1]
             elif thresholds[0] <= date_difference <= thresholds[1]:
