@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
+from PIL import Image
 
 from sqlalchemy import create_engine
 
@@ -92,7 +93,7 @@ palette_html = f'''
 st.markdown(custom_css, unsafe_allow_html=True)
 
 st.sidebar.write(palette_html, unsafe_allow_html=True)
-st.sidebar.write("**Newer >>> Older**")
+st.sidebar.write("**Newer ➞ Older**")
 
 df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
 
