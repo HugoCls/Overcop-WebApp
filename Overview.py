@@ -68,6 +68,10 @@ descriptions = ['1-2j', '2-3j', '3-5j', '5-10j', '10j+']
 
 palette_html = f'''
 <div class="palettecontainer">
+    <div class="palettecolordivc" style="background-color: black"></div>
+    <span style="margin-left: 12px; text-align: center;"><b>No update</b></span>
+</div>
+<div class="palettecontainer">
     <div class="palettecolordivc" title="{descriptions[0]}" style="background-color:{colors[0][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[1]}" style="background-color:{colors[1][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[2][0]}"></div>
