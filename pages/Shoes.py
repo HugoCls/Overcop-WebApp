@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
-import os
 
 from sqlalchemy import create_engine
 
@@ -44,7 +43,7 @@ df_stock['Name'] = df_stock['Name'].apply(lambda x: format_name(x).title() if pd
 
 df_logs['Name'] = df_logs['Name'].apply(lambda x: format_name(x).title() if pd.notna(x) else x)
 
-df_logs['color'] = df_logs['Name'].apply(lambda x: "green" if x in ["custom"] else "blue")
+df_logs['color'] = df_logs['Name'].apply(lambda x: "SpringGreen" if x in ["custom"] else "Blue")
 
 chaussures = df_stock['Name'].unique()
 
@@ -89,6 +88,7 @@ if len(selected_size_data) >= 1:
         customdata=selected_size_data['chosen_pair'],
         mode='lines+markers',
         marker_color=selected_size_data['color'],
+        line=dict(color='black', width=2, dash='dot'),
         name=f'Size {selected_size}',
         hovertemplate='%{y:.2f}€<br>%{customdata}',
     ))
@@ -97,6 +97,10 @@ if len(selected_size_data) >= 1:
         xaxis_title="Date",
         yaxis_title="Price"
     )
+    #st.markdown(f"**Prices evolution for {selected_chaussure}, {selected_size}**")
+    
+    fig.update_traces(marker={'size': 15})
+
     st.markdown(f"**Prices evolution for {selected_chaussure}, {selected_size}**")
     
     st.plotly_chart(fig, use_container_width=True, theme=None)
