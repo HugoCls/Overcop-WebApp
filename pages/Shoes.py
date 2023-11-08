@@ -44,7 +44,7 @@ df_stock['Name'] = df_stock['Name'].apply(lambda x: format_name(x).title() if pd
 
 df_logs['Name'] = df_logs['Name'].apply(lambda x: format_name(x).title() if pd.notna(x) else x)
 
-df_logs['color'] = df_logs['Name'].apply(lambda x: "green" if x in ["custom"] else "blue", axis=1)
+df_logs['color'] = df_logs['Name'].apply(lambda x: "green" if x in ["custom"] else "blue")
 
 chaussures = df_stock['Name'].unique()
 
