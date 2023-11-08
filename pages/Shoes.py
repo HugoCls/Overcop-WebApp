@@ -124,9 +124,10 @@ if len(filtered_df_logs['chosen_pair'].dropna()) >= 1:
 
     first_non_null_value = filtered_df_logs['chosen_pair'].dropna().iloc[0]
 
-    st.markdown(f"Based on price of: **{format_name(first_non_null_value).title()}**")
+    st.caption(f"<center>Based on price of: <b>{format_name(first_non_null_value).title()}</b></center>", unsafe_allow_html=True)
+        
 else:
-    st.markdown(f"No corresponding shoe found.")
+    st.caption(f"<center>Based on price of: <b>None</b></center>", unsafe_allow_html=True)
 
 st.markdown("**Resume**")
 
