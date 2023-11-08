@@ -22,7 +22,7 @@ def replace_with_spaces(value):
 st.set_page_config(
     page_title="Overcop Data",
     page_icon="data/icon.jpg",
-    layout="centered",
+    layout="wide",
     #initial_sidebar_state="expanded",
 )
 
