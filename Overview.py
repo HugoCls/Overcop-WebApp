@@ -165,6 +165,10 @@ for name in name_size_dict:
         #st.table(df)
         st.dataframe(df, hide_index=True)
 
-    if len(df_logs[(df_logs['Name'] == name)]) >= 1:
-        first_non_null_value = df_logs[(df_logs['Name'] == name)]['chosen_pair'].dropna().iloc[0]
+    shoe_df = df_logs[(df_logs['Name'] == name)]['chosen_pair'].dropna()
+
+    if len(shoe_df) >= 1:
+        first_non_null_value = shoe_df.iloc[0]
         st.markdown(f"Based on price of: **{format_name(first_non_null_value).title()}**")
+    else:
+        st.caption(f"Based on price of: **None**")
