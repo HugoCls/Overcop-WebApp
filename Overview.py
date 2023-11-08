@@ -1,68 +1,11 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
-from PIL import Image
 
 from sqlalchemy import create_engine
 
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
-def format_name(name):
-    name = name.lower().replace('\u00a0',' ').replace('-',' ').replace('_',' ').replace('copy of ','').replace('copie de ', '')
-
-    for mark in ['ugg', 'yeezy', 'nike', 'new balance', 'air jordan', 'jordan']:
-
-        name = name.replace(f'{mark} {mark}', f'{mark}')
-
-    return name
-
-def replace_with_spaces(value):
-    return ' '  # Remplace la valeur par un espace
-
-st.set_page_config(
-    page_title="Overcop Data",
-    page_icon="data/icon.jpg",
-    layout="wide",
-    #initial_sidebar_state="expanded",
-)
-
-st.markdown("# Overview 📈")
-st.sidebar.markdown("# Overview 📈")
-custom_css = '''
-<style>
-    .palettecontainer {
-        display: flex;
-        align-items: center;
-    }
-
-    .palettecolordivcon {
-        padding: 0;
-        border: 0;
-        width: auto;
-    }
-
-    .palettecolordiv {
-        height: 96px;
-        width: 20%;
-    }
-
-    .palettecolordiv, .palettecolordivc {
-        color: white;
-        float: left;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        text-shadow: 2px 2px 2px #333133;
-    }
-
-    .palettecolordivc {
-        height: 20px;
-        width: 20%;
-    }
-</style>
-'''
-
-# Définissez les couleurs et les explications
 colors = [["#10ef99",' '], ["#7ef6c8", '‎'], ["#b7ffe3", ' ‎'], ["#e0fff3", '‎ '], ["#f8fffc",'  '], ["#06e0f8", '‎  '], ["#7ee9f5", ' ‎ '], ["#adf0f7", '  ‎'], ["#dafafd", '‎‎'], ["#f6feff",'‎‎ ']]
 
 descriptions = ['1-2j', '2-3j', '3-5j', '5-10j', '10j+']
@@ -90,27 +33,17 @@ palette_html = f'''
 </div>
 '''
 
-st.markdown(custom_css, unsafe_allow_html=True)
+with open("style.css") as f:
+    css = f.read()
 
-st.sidebar.write(palette_html, unsafe_allow_html=True)
-st.sidebar.write("**Newer ➞ Older**")
+def format_name(name):
+    name = name.lower().replace('\u00a0',' ').replace('-',' ').replace('_',' ').replace('copy of ','').replace('copie de ', '')
 
-df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
+    for mark in ['ugg', 'yeezy', 'nike', 'new balance', 'air jordan', 'jordan']:
 
-df_logs = pd.read_sql("SELECT * FROM `Priceslogs`", con=engine)
+        name = name.replace(f'{mark} {mark}', f'{mark}')
 
-most_recent_date = df_logs['ProcessingDate'].max()
-
-# Groupement des tailles par nom
-grouped = df_stock.groupby('Name')['Size'].apply(list).reset_index()
-
-name_size_dict = dict(zip(grouped['Name'], grouped['Size']))
-
-# Supprimer les valeurs "None" des listes dans le dictionnaire
-name_size_dict = {name: [size for size in sizes if size is not None] for name, sizes in name_size_dict.items()}
-
-
-N = max(len(sizes) for sizes in name_size_dict.values())
+    return name
 
 def add_colors(state):
     for color in colors:
@@ -157,6 +90,45 @@ def determine_color(state_and_last_date):
                 return colors[9][1]
         else:
             return ''
+        
+st.set_page_config(
+    page_title="Overcop Data",
+    page_icon="data/icon.jpg",
+    layout="wide",
+)
+
+st.markdown("# Overview 📈")
+st.sidebar.markdown("# Overview 📈")
+    
+st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
+
+st.sidebar.write(palette_html, unsafe_allow_html=True)
+st.sidebar.write("**Newer ➞ Older**")
+
+df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
+
+query = """
+WITH all_logs AS (
+SELECT
+	*,
+	ROW_NUMBER() OVER (PARTITION BY ProcessingDate, Name, Size ORDER BY ID DESC) AS rn
+FROM Priceslogs
+)
+SELECT * FROM all_logs WHERE rn = 1
+"""
+
+df_logs = pd.read_sql(query, con=engine)
+
+most_recent_date = df_logs['ProcessingDate'].max()
+
+grouped = df_stock.groupby('Name')['Size'].apply(list).reset_index()
+
+name_size_dict = dict(zip(grouped['Name'], grouped['Size']))
+
+name_size_dict = {name: [size for size in sizes if size is not None] for name, sizes in name_size_dict.items()}
+
+
+N = max(len(sizes) for sizes in name_size_dict.values())
     
 for name in name_size_dict:
 
@@ -180,9 +152,6 @@ for name in name_size_dict:
     df = df.style.map(add_colors, subset=columns).hide(level=1)
 
     col1, col2 = st.columns([1, 8])
-    
-    #with col1:
-    #    st.markdown(format_name(name).title())
     
     with col1:
         if len(df_stock[df_stock['Name'] == name]) >= 1:

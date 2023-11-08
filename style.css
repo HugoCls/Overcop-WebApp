@@ -1,0 +1,29 @@
+.palettecontainer {
+    display: flex;
+    align-items: center;
+}
+
+.palettecolordivcon {
+    padding: 0;
+    border: 0;
+    width: auto;
+}
+
+.palettecolordiv {
+    height: 96px;
+    width: 20%;
+}
+
+.palettecolordiv, .palettecolordivc {
+    color: white;
+    float: left;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    text-shadow: 2px 2px 2px #333133;
+}
+
+.palettecolordivc {
+    height: 20px;
+    width: 20%;
+}

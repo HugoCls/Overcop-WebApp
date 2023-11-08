@@ -79,6 +79,7 @@ if len(selected_size_data) >= 1:
         y=selected_size_data['Price'],
         mode='lines+markers',
         name=f'Taille {selected_size}',
+        hover_name="Price",
     ))
 
     fig.update_layout(
@@ -87,7 +88,7 @@ if len(selected_size_data) >= 1:
     )
     st.markdown(f"**Évolution des prix pour {selected_chaussure}, {selected_size}**")
     # Afficher le graphique
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, theme=None)
 
 else:
     st.image("https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg", caption=f"Évolution des prix pour {selected_chaussure}, {selected_size}")
