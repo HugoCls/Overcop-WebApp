@@ -168,6 +168,6 @@ for name in name_size_dict:
 
         if len(shoe_df) >= 1:
             first_non_null_value = shoe_df.iloc[0]
-            st.markdown(f"<center>Based on price of: <b>{format_name(first_non_null_value).title()}</b></center>")
+            st.caption(f"<center>Based on price of: **{format_name(first_non_null_value).title()}**</center>", unsafe_allow_html=True)
         else:
-            st.markdown(f"<center>Based on price of: <b>None</b></center>")
+            st.caption(f"<center>Based on price of: **None**</center>", unsafe_allow_html=True)
