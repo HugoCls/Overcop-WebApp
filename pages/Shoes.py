@@ -44,6 +44,8 @@ df_stock['Name'] = df_stock['Name'].apply(lambda x: format_name(x).title() if pd
 
 df_logs['Name'] = df_logs['Name'].apply(lambda x: format_name(x).title() if pd.notna(x) else x)
 
+df_logs['color'] = df_logs['Name'].apply(lambda x: "green" if x in ["custom"] else "blue", axis=1)
+
 chaussures = df_stock['Name'].unique()
 
 resume_df = pd.DataFrame(columns=["Size", "Last Update", "Current Price", "Nb of Updates"])
@@ -86,7 +88,7 @@ if len(selected_size_data) >= 1:
         y=selected_size_data['Price'],
         customdata=selected_size_data['chosen_pair'],
         mode='lines+markers',
-        marker_color=selected_size_data['State'],
+        marker_color=selected_size_data['color'],
         name=f'Size {selected_size}',
         hovertemplate='%{y:.2f}€<br>%{customdata}',
     ))
