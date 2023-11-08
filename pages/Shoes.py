@@ -15,6 +15,12 @@ def format_name(name):
 
     return name
 
+st.set_page_config(
+    page_title="Overcop Data",
+    page_icon="../data/icon.jpg",
+    layout="wide",
+)
+
 st.markdown("# Shoes 👟")
 st.sidebar.markdown("# Shoes 👟")
 
