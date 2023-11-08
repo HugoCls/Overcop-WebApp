@@ -79,7 +79,7 @@ if len(selected_size_data) >= 1:
         y=selected_size_data['Price'],
         mode='lines+markers',
         name=f'Taille {selected_size}',
-        hover_name="Price",
+        hovertemplate='%{y:.2f}€',  # Personnalisez le texte de survol ici
     ))
 
     fig.update_layout(
@@ -87,9 +87,9 @@ if len(selected_size_data) >= 1:
         yaxis_title="Prix"
     )
     st.markdown(f"**Évolution des prix pour {selected_chaussure}, {selected_size}**")
-    # Afficher le graphique
-    st.plotly_chart(fig, theme=None)
-
+    
+    st.plotly_chart(fig, use_container_width=True, theme=None)
+    
 else:
     st.image("https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg", caption=f"Évolution des prix pour {selected_chaussure}, {selected_size}")
 
