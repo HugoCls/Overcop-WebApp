@@ -80,21 +80,13 @@ fig = go.Figure()
 selected_size_data = filtered_df_logs[filtered_df_logs['Size'] == selected_size]
 
 if len(selected_size_data) >= 1:
-    state = selected_size_data['State']
-
-    if state is None or state == "displayed" or state == "None":
-        color = "Blue"
-    elif state == "custom":
-        color = "Green"
-    else:
-        color = "Blue"
 
     fig.add_trace(go.Scatter(
         x=selected_size_data['ProcessingDate'],
         y=selected_size_data['Price'],
         customdata=selected_size_data['chosen_pair'],
         mode='lines+markers',
-        marker_color=color,
+        marker_color=selected_size_data['State'],
         name=f'Size {selected_size}',
         hovertemplate='%{y:.2f}€<br>%{customdata}',
     ))
