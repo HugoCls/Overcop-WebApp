@@ -84,9 +84,10 @@ if len(selected_size_data) >= 1:
     fig.add_trace(go.Scatter(
         x=selected_size_data['ProcessingDate'],
         y=selected_size_data['Price'],
+        custom_data=selected_size_data['chosen_pair'],
         mode='lines+markers',
         name=f'Size {selected_size}',
-        hovertemplate='%{y:.2f}€',  # Personnalisez le texte de survol ici
+        hovertemplate='%{y:.2f}€<br>%{custom_data}',
     ))
 
     fig.update_layout(
@@ -126,7 +127,7 @@ if len(filtered_df_logs['chosen_pair'].dropna()) >= 1:
     st.markdown(f"Based on price of: **{format_name(first_non_null_value).title()}**")
 else:
     st.markdown(f"No corresponding shoe found.")
-    
+
 st.markdown("**Resume**")
 
 st.markdown(resume_df.sort_values("Size", ascending=False).style.hide(axis="index").to_html(), unsafe_allow_html=True)
