@@ -160,15 +160,14 @@ for name in name_size_dict:
             image_url = "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
 
         st.image(image_url, caption=format_name(name).title(), use_column_width=True)
-        
+    
     with col2:
-        #st.table(df)
         st.dataframe(df, hide_index=True)
 
-    shoe_df = df_logs[(df_logs['Name'] == name)]['chosen_pair'].dropna()
+        shoe_df = df_logs[(df_logs['Name'] == name)]['chosen_pair'].dropna()
 
-    if len(shoe_df) >= 1:
-        first_non_null_value = shoe_df.iloc[0]
-        st.markdown(f"Based on price of: **{format_name(first_non_null_value).title()}**")
-    else:
-        st.caption(f"Based on price of: **None**")
+        if len(shoe_df) >= 1:
+            first_non_null_value = shoe_df.iloc[0]
+            st.markdown(f"Based on price of: **{format_name(first_non_null_value).title()}**")
+        else:
+            st.caption(f"Based on price of: **None**")
