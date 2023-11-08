@@ -84,10 +84,10 @@ if len(selected_size_data) >= 1:
     fig.add_trace(go.Scatter(
         x=selected_size_data['ProcessingDate'],
         y=selected_size_data['Price'],
-        custom_data=selected_size_data['chosen_pair'],
+        customdata=selected_size_data['chosen_pair'],
         mode='lines+markers',
         name=f'Size {selected_size}',
-        hovertemplate='%{y:.2f}€<br>%{custom_data}',
+        hovertemplate='%{y:.2f}€<br>%{customdata}',
     ))
 
     fig.update_layout(
