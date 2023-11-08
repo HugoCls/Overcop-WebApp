@@ -43,7 +43,7 @@ df_stock['Name'] = df_stock['Name'].apply(lambda x: format_name(x).title() if pd
 
 df_logs['Name'] = df_logs['Name'].apply(lambda x: format_name(x).title() if pd.notna(x) else x)
 
-df_logs['color'] = df_logs['Name'].apply(lambda x: "SpringGreen" if x in ["custom"] else "Blue")
+df_logs['color'] = df_logs['State'].apply(lambda x: "SpringGreen" if x in ["custom"] else "Blue")
 
 chaussures = df_stock['Name'].unique()
 
@@ -81,8 +81,6 @@ fig = go.Figure()
 selected_size_data = filtered_df_logs[filtered_df_logs['Size'] == selected_size]
 
 if len(selected_size_data) >= 1:
-
-    st.markdown(selected_size_data['color'])
 
     fig.add_trace(go.Scatter(
         x=selected_size_data['ProcessingDate'],
