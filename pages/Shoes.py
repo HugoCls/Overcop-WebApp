@@ -119,8 +119,10 @@ for size in filtered_df_stock['Size'].unique():
 
         resume_df = pd.concat([pd.DataFrame(resume_line), resume_df], ignore_index=True)
 
-if len(filtered_df_stock) >= 1:
-    first_non_null_value = filtered_df_stock['chosen_pair'].dropna().iloc[0]
+if len(filtered_df_logs) >= 1:
+    
+    first_non_null_value = filtered_df_logs['chosen_pair'].dropna().iloc[0]
+
     st.markdown(f"Based on price of: **{format_name(first_non_null_value).title()}**")
 else:
     st.markdown(f"No corresponding shoe found.")
