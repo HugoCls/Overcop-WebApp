@@ -49,7 +49,7 @@ chaussures = df_stock['Name'].unique()
 resume_df = pd.DataFrame(columns=["Size", "Last Update", "Current Price", "Nb of Updates"])
 
 # Sidebar pour la sélection de la chaussure
-st.sidebar.title("Historique des prix")
+st.sidebar.title("Price history")
 
 # Divisez la barre latérale en deux colonnes
 col1, col2 = st.sidebar.columns([3, 1])
@@ -60,7 +60,7 @@ selected_chaussure = col1.selectbox("Sélectionnez une chaussure", chaussures)
 sizes = df_stock[df_stock['Name'] == selected_chaussure]['Size'].unique()
 
 # Deuxième boîte de sélection pour la taille
-selected_size = col2.selectbox("Taille", sizes)
+selected_size = col2.selectbox("Size", sizes)
 
 if len(df_stock[df_stock['Name'] == selected_chaussure]) >= 1:
     image_url = df_stock[df_stock['Name'] == selected_chaussure].iloc[0]['Image']
@@ -85,15 +85,15 @@ if len(selected_size_data) >= 1:
         x=selected_size_data['ProcessingDate'],
         y=selected_size_data['Price'],
         mode='lines+markers',
-        name=f'Taille {selected_size}',
+        name=f'Size {selected_size}',
         hovertemplate='%{y:.2f}€',  # Personnalisez le texte de survol ici
     ))
 
     fig.update_layout(
         xaxis_title="Date",
-        yaxis_title="Prix"
+        yaxis_title="Price"
     )
-    st.markdown(f"**Évolution des prix pour {selected_chaussure}, {selected_size}**")
+    st.markdown(f"**Prices evolution for {selected_chaussure}, {selected_size}**")
     
     st.plotly_chart(fig, use_container_width=True, theme=None)
     
@@ -119,6 +119,11 @@ for size in filtered_df_stock['Size'].unique():
 
         resume_df = pd.concat([pd.DataFrame(resume_line), resume_df], ignore_index=True)
 
-st.markdown("**Résumé**")
+if len(filtered_df_stock) >= 1:
+    first_non_null_value = filtered_df_stock['chosen_pair'].dropna().iloc[0]
+    st.markdown(f"Based on price of: **{format_name(first_non_null_value).title()}**")
+else:
+    st.markdown(f"No corresponding shoe found.")
+st.markdown("**Resume**")
 
 st.markdown(resume_df.sort_values("Size", ascending=False).style.hide(axis="index").to_html(), unsafe_allow_html=True)

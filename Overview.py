@@ -164,3 +164,7 @@ for name in name_size_dict:
     with col2:
         #st.table(df)
         st.dataframe(df, hide_index=True)
+
+    if len(df_logs[(df_logs['Name'] == name)]) >= 1:
+        first_non_null_value = df_logs[(df_logs['Name'] == name)]['chosen_pair'].dropna().iloc[0]
+        st.markdown(f"Based on price of: **{format_name(first_non_null_value).title()}**")
