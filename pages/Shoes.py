@@ -45,6 +45,8 @@ df_logs['Name'] = df_logs['Name'].apply(lambda x: format_name(x).title() if pd.n
 
 df_logs['color'] = df_logs['Name'].apply(lambda x: "SpringGreen" if x in ["custom"] else "Blue")
 
+print(df_logs['color'])
+
 chaussures = df_stock['Name'].unique()
 
 resume_df = pd.DataFrame(columns=["Size", "Last Update", "Current Price", "Nb of Updates"])
@@ -103,7 +105,7 @@ if len(selected_size_data) >= 1:
 
     st.markdown(f"**Prices evolution for {selected_chaussure}, {selected_size}**")
     
-    st.plotly_chart(fig, use_container_width=True, theme=None)
+    st.plotly_chart(fig, use_container_width=True)
     
 else:
     st.image("https://t4.ftcdn.net/jpg/04/72/65/73/360_F_472657366_6kV9ztFQ3OkIuBCkjjL8qPmqnuagktXU.jpg", caption=f"Évolution des prix pour {selected_chaussure}, {selected_size}")
