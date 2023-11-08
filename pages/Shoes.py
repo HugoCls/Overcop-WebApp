@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
+import os
 
 from sqlalchemy import create_engine
 
@@ -17,7 +18,7 @@ def format_name(name):
 
 st.set_page_config(
     page_title="Overcop Data",
-    page_icon="../data/icon.jpg",
+    page_icon=os.path.abspath("../data/icon.jpg"),
     layout="wide",
 )
 

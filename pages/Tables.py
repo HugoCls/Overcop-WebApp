@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 
 from sqlalchemy import create_engine
 
@@ -11,7 +12,7 @@ df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
 
 st.set_page_config(
     page_title="Overcop Data",
-    page_icon="../data/icon.jpg",
+    page_icon=os.path.abspath("../data/icon.jpg"),
     layout="wide",
 )
 
