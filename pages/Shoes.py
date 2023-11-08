@@ -94,7 +94,7 @@ if len(selected_size_data) >= 1:
         y=selected_size_data['Price'],
         customdata=selected_size_data['chosen_pair'],
         mode='lines+markers',
-        marker_color=selected_size_data['State'],
+        marker_color=color,
         name=f'Size {selected_size}',
         hovertemplate='%{y:.2f}€<br>%{customdata}',
     ))
