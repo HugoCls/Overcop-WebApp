@@ -77,7 +77,7 @@ def determine_color(state_and_last_date):
             else:
                 return colors[4][1]
 
-        elif state == "None" or state == "displayed":
+        elif state in ["None", "displayed", "average"]:
             if date_difference < thresholds[1]:
                 return colors[5][1]
             elif thresholds[0] <= date_difference <= thresholds[1]:
