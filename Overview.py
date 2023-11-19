@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
-colors = [["#10ef99",' '], ["#7ef6c8", '‎'], ["#b7ffe3", ' ‎'], ["#e0fff3", '‎ '], ["#f8fffc",'  '], ["#06e0f8", '‎  '], ["#7ee9f5", ' ‎ '], ["#adf0f7", '  ‎'], ["#dafafd", '‎‎'], ["#f6feff",'‎‎ ']]
+colors = [["#10ef99",' '], ["#7ef6c8", '‎'], ["#b7ffe3", ' ‎'], ["#e0fff3", '‎ '], ["#f8fffc",'  '], ["#06e0f8", '‎  '], ["#7ee9f5", ' ‎ '], ["#adf0f7", '  ‎'], ["#dafafd", '‎‎'], ["#f6feff",'‎‎ '], ["#ff0000", ' ‎‎'],  ["#ff6666", '‎ ‎'], ["#ff3333", '‎‎‎'], ["#ff9999", '‎   '], ["#ffcccc", '   ‎']]
 
 descriptions = ['1-2j', '2-3j', '3-5j', '5-10j', '10j+']
 
@@ -30,6 +30,14 @@ palette_html = f'''
     <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[8][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[9][0]}"></div>
     <span style="margin-left: 12px; text-align: center;">Found <b>shoe only</b></span>
+</div>
+<div class="palettecontainer">
+    <div class="palettecolordivc" title="{descriptions[0]}" style="background-color:{colors[10][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[1]}" style="background-color:{colors[11][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[12][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[13][0]}"></div>
+    <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[14][0]}"></div>
+    <span style="margin-left: 12px; text-align: center;">No sizes at all</span>
 </div>
 '''
 
@@ -77,7 +85,7 @@ def determine_color(state_and_last_date):
             else:
                 return colors[4][1]
 
-        elif state in ["None", "displayed", "average"]:
+        elif state in ["None", "displayed"]:
             if date_difference < thresholds[1]:
                 return colors[5][1]
             elif thresholds[0] <= date_difference <= thresholds[1]:
@@ -88,6 +96,17 @@ def determine_color(state_and_last_date):
                 return colors[8][1]
             else:
                 return colors[9][1]
+        elif state in ["average"]:
+            if date_difference < thresholds[1]:
+                return colors[10][1]
+            elif thresholds[0] <= date_difference <= thresholds[1]:
+                return colors[11][1]
+            elif thresholds[1] <= date_difference <= thresholds[2]:
+                return colors[12][1]
+            elif thresholds[2] <= date_difference <= thresholds[3]:
+                return colors[13][1]
+            else:
+                return colors[14][1]
         else:
             return ''
         
