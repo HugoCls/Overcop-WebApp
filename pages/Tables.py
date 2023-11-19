@@ -1,8 +1,13 @@
 import streamlit as st
 import pandas as pd
 import os
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import Normalize
 
 from sqlalchemy import create_engine
+from all_in_scrap import Scraping
+from matching_functions import get_pairs_to_scrap
 
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
@@ -20,6 +25,25 @@ st.set_page_config(
 
 st.markdown("# Tables :signal_strength:")
 st.sidebar.markdown("# Tables :signal_strength:")
+
+st.title("Correspondances")
+
+uploaded_file = st.file_uploader("uploaded file",label_visibility="collapsed", type=['csv'])
+
+if uploaded_file is not None:  
+
+    df = pd.read_csv(uploaded_file)
+    df["Name"] = df.groupby('Handle')['Vendor'].transform(lambda x: x.fillna(x.loc[x.notnull()].iloc[0])) + ' ' + df.groupby('Handle')['Title'].transform(lambda x: x.fillna(x.loc[x.notnull()].iloc[0]))
+    df["Size"] = df["Option1 Value"]
+        
+    Scraper = Scraping()
+
+    Scraper.scrape_pages()
+
+    correspondances_df = get_pairs_to_scrap(df, Scraper.all_WTN_pairs)
+
+    st.dataframe(correspondances_df)
+    
 
 st.title("Priceslogs")
 st.dataframe(df_logs)
