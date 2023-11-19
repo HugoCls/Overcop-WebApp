@@ -54,7 +54,7 @@ def get_pairs_to_scrap(df, all_WTN_pairs):
     correspondances_df = pd.DataFrame(columns=['Name', 'Match', 'Ratio', 'href'])
 
     for index, stock_pair_name in enumerate(unique_names):
-        log.info(index, stock_pair_name)
+        log.info(f"{index}, {stock_pair_name}")
         best_match_name = None
         best_match_price = None
         best_match_href = None
@@ -112,12 +112,6 @@ class Scraping:
             os.mkdir(f'data/{self.now}')
 
         self.df_pairs.to_csv(f'data/{self.now}/Prices.csv')
-
-        #self.df_pairs.to_sql('WTN_Prices', con=self.engine, if_exists='append', index=False)
-
-        log.info(self.df_pairs)
-
-        log.info(self.df_pairs)
 
     def create_final_df(self):
         for pair_name in self.all_WTN_pairs:
