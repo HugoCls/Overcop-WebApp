@@ -7,12 +7,6 @@ import logging as log
 
 log.basicConfig(filename='data/console.log', level=log.INFO, format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
 
-file_formatter = log.Formatter('%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
-console = log.StreamHandler()
-console.setLevel(log.INFO)
-console.setFormatter(file_formatter)
-log.getLogger('').addHandler(console)
-
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
 colors = [["#10ef99",' '], ["#7ef6c8", '‎'], ["#b7ffe3", ' ‎'], ["#e0fff3", '‎ '], ["#f8fffc",'  '], ["#06e0f8", '‎  '], ["#7ee9f5", ' ‎ '], ["#adf0f7", '  ‎'], ["#dafafd", '‎‎'], ["#f6feff",'‎‎ '], ["#7C80FC", ' ‎‎'],  ["#ABA0F9", '‎ ‎'], ["#D6CFFF", '‎‎‎'], ["#EBE3F5", '‎   '], ["#FEFEFF", '   ‎']]
