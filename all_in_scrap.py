@@ -97,11 +97,7 @@ class Scraping:
 
         self.scrap_shoes()
         
-        print(self.all_WTN_pairs)
-
-        print(self.all_WTN_pairs)
-
-        with open(f'data/{self.now}/all.json','w') as f:
+        with open(f'data/{self.now}/all_WTN_pairs.json','w') as f:
             f.write(str(self.all_WTN_pairs))
 
         self.create_final_df()

@@ -4,6 +4,7 @@ beautifulsoup4
 regex
 pandas
 plotly
+logging
 mysqlclient
 SQLAlchemy
 matplotlib
