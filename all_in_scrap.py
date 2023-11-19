@@ -8,6 +8,7 @@ import os
 from datetime import datetime
 import Levenshtein
 import streamlit as st
+import logging as log
 
 def is_valid_size(size):
     # Utilisez une expression régulière pour vérifier si la taille est un float ou un float suivi d'une fraction
