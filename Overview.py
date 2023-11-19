@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 import logging as log
 
-log.basicConfig(filename='data/prod_console.log', level=log.INFO, format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
+log.basicConfig(filename='data/console.log', level=log.INFO, format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
 
 file_formatter = log.Formatter('%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
 console = log.StreamHandler()
