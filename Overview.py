@@ -37,7 +37,7 @@ palette_html = f'''
     <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[12][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[13][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[14][0]}"></div>
-    <span style="margin-left: 12px; text-align: center;">No sizes at all</span>
+    <span style="margin-left: 12px; text-align: center;"><b>No sizes</b> at all</span>
 </div>
 '''
 
