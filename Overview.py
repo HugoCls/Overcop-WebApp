@@ -21,7 +21,7 @@ palette_html = f'''
     <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[2][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[3][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[4][0]}"></div>
-    <span style="margin-left: 12px; text-align: center;">Found <b>size</b></span>
+    <span style="margin-left: 12px; text-align: center;"><b>Exact</b> price</span>
 </div>
 <div class="palettecontainer">
     <div class="palettecolordivc" title="{descriptions[0]}" style="background-color:{colors[5][0]}"></div>
@@ -29,7 +29,7 @@ palette_html = f'''
     <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[7][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[8][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[9][0]}"></div>
-    <span style="margin-left: 12px; text-align: center;">Found <b>shoe only</b></span>
+    <span style="margin-left: 12px; text-align: center;"><b>Lower</b> price</span>
 </div>
 <div class="palettecontainer">
     <div class="palettecolordivc" title="{descriptions[0]}" style="background-color:{colors[10][0]}"></div>
@@ -37,7 +37,7 @@ palette_html = f'''
     <div class="palettecolordivc" title="{descriptions[2]}" style="background-color:{colors[12][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[3]}" style="background-color:{colors[13][0]}"></div>
     <div class="palettecolordivc" title="{descriptions[4]}" style="background-color:{colors[14][0]}"></div>
-    <span style="margin-left: 12px; text-align: center;"><b>No sizes</b> at all</span>
+    <span style="margin-left: 12px; text-align: center;"><b>Average</b> price</span>
 </div>
 '''
 
