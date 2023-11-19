@@ -88,11 +88,11 @@ class Scraping:
     def __init__(self):
         self.df_pairs = pd.DataFrame(columns=['Name', 'href', 'Price', 'Sizes'])
 
+        self.now = datetime.now().strftime("%Y_%m_%d")
+
         if not os.path.exists(f'data/{self.now}'):
             os.mkdir(f'data/{self.now}')
             
-        self.now = datetime.now().strftime("%Y_%m_%d")
-
         self.all_WTN_pairs = {}
 
     def run(self):
