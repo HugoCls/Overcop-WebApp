@@ -2,7 +2,6 @@ streamlit
 httpx
 beautifulsoup4
 regex
-logging
 json
 pandas
 plotly
