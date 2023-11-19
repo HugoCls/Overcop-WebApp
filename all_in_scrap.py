@@ -53,7 +53,7 @@ def get_pairs_to_scrap(df, all_WTN_pairs):
     correspondances_df = pd.DataFrame(columns=['Name', 'Match', 'Ratio', 'href'])
 
     for index, stock_pair_name in enumerate(unique_names):
-        print(index, stock_pair_name)
+        log.info(index, stock_pair_name)
         best_match_name = None
         best_match_price = None
         best_match_href = None
@@ -92,7 +92,7 @@ class Scraping:
 
         if not os.path.exists(f'data/{self.now}'):
             os.mkdir(f'data/{self.now}')
-            
+
         self.all_WTN_pairs = {}
 
     def run(self):
@@ -114,9 +114,9 @@ class Scraping:
 
         #self.df_pairs.to_sql('WTN_Prices', con=self.engine, if_exists='append', index=False)
 
-        print(self.df_pairs)
+        log.info(self.df_pairs)
 
-        print(self.df_pairs)
+        log.info(self.df_pairs)
 
     def create_final_df(self):
         for pair_name in self.all_WTN_pairs:
@@ -187,7 +187,7 @@ class Scraping:
         
 
     def scrape_pages(self):
-        print("-- Starting scraping Pages --")
+        log.info("-- Starting scraping Pages --")
 
         if not os.path.exists(f"data/{self.now}/all_WTN_pairs.json"):
             
@@ -212,17 +212,17 @@ class Scraping:
             with open(f"data/{self.now}/all_WTN_pairs.json", 'w') as f:
                 json.dump(self.all_WTN_pairs, f, ensure_ascii=True)
 
-            print("-- Pages scraping completed --")
+            log.info("-- Pages scraping completed --")
         
         else:
             with open(f"data/{self.now}/all_WTN_pairs.json", 'r') as f:
                 self.all_WTN_pairs = json.load(f)
 
     def scrap_shoes(self):
-        print("-- Starting subdata scraping --")
+        log.info("-- Starting subdata scraping --")
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
             
             futures = {executor.submit(self.fetch_pair_data, pair_name): pair_name for pair_name in self.all_WTN_pairs.keys()}
 
             concurrent.futures.wait(futures)
-        print("-- Subdata scraping completed --")
+        log.info("-- Subdata scraping completed --")
