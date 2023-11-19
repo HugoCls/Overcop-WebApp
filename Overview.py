@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
-colors = [["#10ef99",' '], ["#7ef6c8", '‎'], ["#b7ffe3", ' ‎'], ["#e0fff3", '‎ '], ["#f8fffc",'  '], ["#06e0f8", '‎  '], ["#7ee9f5", ' ‎ '], ["#adf0f7", '  ‎'], ["#dafafd", '‎‎'], ["#f6feff",'‎‎ '], ["#9900ff", ' ‎‎'],  ["#cc00ff", '‎ ‎'], ["#ff00ff", '‎‎‎'], ["#ff33cc", '‎   '], ["#ff3399", '   ‎']]
+colors = [["#10ef99",' '], ["#7ef6c8", '‎'], ["#b7ffe3", ' ‎'], ["#e0fff3", '‎ '], ["#f8fffc",'  '], ["#06e0f8", '‎  '], ["#7ee9f5", ' ‎ '], ["#adf0f7", '  ‎'], ["#dafafd", '‎‎'], ["#f6feff",'‎‎ '], ["#7C80FC", ' ‎‎'],  ["#ABA0F9", '‎ ‎'], ["#D6CFFF", '‎‎‎'], ["#EBE3F5", '‎   '], ["#FEFEFF", '   ‎']]
 
 descriptions = ['1-2j', '2-3j', '3-5j', '5-10j', '10j+']
 
