@@ -1,13 +1,8 @@
 import streamlit as st
 import pandas as pd
-import os
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.colors import Normalize
 
 from sqlalchemy import create_engine
-from all_in_scrap import Scraping
-from matching_functions import get_pairs_to_scrap
+from all_in_scrap import Scraping, get_pairs_to_scrap
 
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
