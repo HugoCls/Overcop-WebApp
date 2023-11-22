@@ -68,9 +68,9 @@ def determine_color(state_and_last_date):
         return ''
 
     else:
-        [state, last_date_str] = state_and_last_date.split(':')
+        [state, last_date_str] = state_and_last_date.split('+')
 
-        last_date = datetime.strptime(last_date_str, "%Y-%m-%d").date()
+        last_date = datetime.strptime(last_date_str, "%Y-%m-%d %H:%M:%S")
 
         date_difference = most_recent_date - last_date
 
@@ -162,7 +162,7 @@ for name in name_size_dict:
         filtered_df = df_logs[(df_logs['Name'] == name) & (df_logs['Size'] == column)].sort_values(by='ProcessingDate', ascending=False)
 
         if not filtered_df.empty:        
-            state_and_last_date = f"{filtered_df.iloc[0]['State']}:{filtered_df.iloc[0]['ProcessingDate']}"
+            state_and_last_date = f"{filtered_df.iloc[0]['State']}+{filtered_df.iloc[0]['ProcessingDate']}"
         
         else:
             state_and_last_date = None
