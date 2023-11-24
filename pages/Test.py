@@ -1,6 +1,7 @@
 import logging as log
 import streamlit as st
 import os
+import sys
 """
 if st.button('Folders & Files'):
     st.text(f"{os.getcwd()}")
@@ -13,14 +14,14 @@ if st.button('Folders & Files'):
 
 """
 
-log.basicConfig(filename='data/console.log', level=log.INFO, format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
+log.basicConfig(stream=sys.stdout, filename='data/console.log', level=log.INFO, format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
 
 if len(log.getLogger('').handlers) < 2:  # Vérifiez le nombre de handlers pour éviter les doublons
     temp_file_handler = log.FileHandler('data/temp_logs.log')
     temp_file_handler.setLevel(log.INFO)
     temp_file_handler.setFormatter(log.Formatter('%(asctime)s [%(levelname)s] %(filename)s - %(message)s'))
     log.getLogger('').addHandler(temp_file_handler)
-    
+
 if st.button('Log test'):
     #print("TEST")
     log.info("TEST")
