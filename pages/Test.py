@@ -3,10 +3,13 @@ import streamlit as st
 import os
 import sys
 
-if not os.path.exists(f"{os.getcwd()}/data/console.log"):
-    f = open(f"{os.getcwd()}/data/console.log", "x")
+log_file_path = f"{os.getcwd()}/data/console.log"
 
-with open(f"{os.getcwd()}/data/console.log", 'a') as f:
+if not os.path.exists(log_file_path):
+    with open(log_file_path, 'w') as file:
+        file.write("")
+    
+with open(log_file_path, 'a') as f:
     f.write('This is a test')
 
 if st.button('Folders & Files'):
@@ -18,9 +21,9 @@ if st.button('Folders & Files'):
         for fichier in fichiers:
             st.text(os.path.join(dossier_parent, fichier))
 
-st.text(f"{os.getcwd()}/data/console.log")
+st.text(log_file_path)
 
-st.text(os.path.exists(f"{os.getcwd()}/data/console.log"))
+st.text(os.path.exists(log_file_path))
 
 log.basicConfig(filename=f'{os.getcwd()}/data/console.log', level=log.INFO, format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
 
