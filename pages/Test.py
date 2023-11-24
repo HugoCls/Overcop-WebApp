@@ -3,11 +3,17 @@ import streamlit as st
 import os
 import sys
 
-log_file_path = f"{os.getcwd()}/data/console.log"
+log_dir = os.path.join(os.getcwd(), 'data')
+log_file_path = os.path.join(log_dir, 'console.log')
+
+st.write(log_file_path)
+
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)  # Crée le répertoire s'il n'existe pas
 
 if not os.path.exists(log_file_path):
     with open(log_file_path, 'w') as file:
-        file.write("")
+        file.write("")  # Crée le fichier s'il n'existe pas
     
 with open(log_file_path, 'a') as f:
     f.write('This is a test')
