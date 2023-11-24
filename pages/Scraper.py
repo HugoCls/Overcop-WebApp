@@ -119,4 +119,4 @@ for dossier, sous_dossiers, fichiers in os.walk(dossier_parent):
         chemin_sous_dossier = os.path.join(dossier, sous_dossier)
         folders += f'   Sous-dossier : {chemin_sous_dossier}\n'
 
-st.text_area("Logs temporaires:", value=folders, height=min(600, folders.count('\n') + 1))
+st.text_area("Files:", value=folders, height=min(600, folders.count('\n') + 1))
