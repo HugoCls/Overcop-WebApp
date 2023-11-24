@@ -56,7 +56,7 @@ if col_1.button('Start') and uploaded_file is not None:
         clean_temp_logs()
 
         if not os.path.exists(f'data/{now}'):
-            os.mkdir(f'data/{now}')
+            os.mkdir(f'data/{now}') 
             
         with open(f"data/{now}/products_export.csv", "wb") as f:
             f.write(uploaded_file.getvalue())
