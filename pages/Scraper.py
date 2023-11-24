@@ -103,17 +103,21 @@ if col_1.button('Start') and uploaded_file is not None:
 
     st.text_area("Logs temporaires:", value=logs_content, height=min(600, logs_content.count('\n') + 1))
 
+folders = ''
+
 dossier_parent = os.getcwd()
 
 for dossier, sous_dossiers, fichiers in os.walk(dossier_parent):
-    st.write(f'Dossier : {dossier}')
+    folders += f'Dossier : {dossier}\n'
 
     # Afficher tous les fichiers dans le dossier actuel
     for fichier in fichiers:
         chemin_fichier = os.path.join(dossier, fichier)
-        st.write(f'   Fichier : {chemin_fichier}')
+        folders += f'   Fichier : {chemin_fichier}\n'
 
     # Afficher les sous-dossiers du dossier actuel
     for sous_dossier in sous_dossiers:
         chemin_sous_dossier = os.path.join(dossier, sous_dossier)
-        st.write(f'   Sous-dossier : {chemin_sous_dossier}')
+        folders += f'   Sous-dossier : {chemin_sous_dossier}\n'
+
+st.text_area("Logs temporaires:", value=folders, height=min(600, folders.count('\n') + 1))
