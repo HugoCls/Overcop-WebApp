@@ -11,5 +11,3 @@ level = "info"
 # Default: "%(asctime)s %(message)s"
 messageFormat = "%(asctime)s [%(levelname)s] %(filename)s - %(message)s"
 #format = "%(asctime)s [%(levelname)s] %(filename)s - %(message)s"
-
-file = "data/console.log"

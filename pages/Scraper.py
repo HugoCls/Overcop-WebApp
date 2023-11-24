@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 import os
 import time
 import logging as log
@@ -7,6 +6,8 @@ import logging as log
 from datetime import datetime
 from sqlalchemy import create_engine
 from wethenew_scraping_class import Scraping
+
+st.text(f"{os.getcwd()}")
 
 def get_temp_logs():
     with open('data/temp_logs.log', 'r') as file:
