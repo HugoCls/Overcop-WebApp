@@ -13,5 +13,6 @@ if st.button('Folders & Files'):
 
 
 if st.button('Log test'):
-    log.info("TEST")
     print("TEST")
+    log.info("TEST")
+    print("HELLO")
