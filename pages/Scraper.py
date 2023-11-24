@@ -11,11 +11,18 @@ engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYS
 
 now = datetime.now().strftime("%Y_%m_%d")
 
-daily_data_path = os.path.join(os.getcwd(), f'data/{now}')
+daily_data_path = os.path.join(os.getcwd(), 'data', now)
+
+# Vérifiez si le répertoire quotidien existe, sinon créez-le
+if not os.path.exists(daily_data_path):
+    # Vérifiez si le répertoire parent existe, sinon créez-le
+    parent_directory = os.path.join(os.getcwd(), 'data')
+    if not os.path.exists(parent_directory):
+        os.makedirs(parent_directory)
 
 log = logging.getLogger(__name__)
 
-log.info(os.path.join(daily_data_path, "products_export.csv"))
+log.info(daily_data_path)
 
 st.set_page_config(
     page_title="Overcop Data",
@@ -41,10 +48,6 @@ uploaded_file = st.file_uploader("uploaded file",label_visibility="collapsed", t
 if col_1.button('Start') and uploaded_file is not None:
     with st.status('Currently Scraping...'):
         
-
-        if not os.path.exists(daily_data_path):
-            os.mkdir(daily_data_path) 
-            
         with open(os.path.join(daily_data_path, "products_export.csv"), "wb") as f:
             f.write(uploaded_file.getvalue())
         
