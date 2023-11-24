@@ -3,7 +3,9 @@ import streamlit as st
 import os
 import sys
 
-
+if not os.path.exists(f"{os.getcwd()}/data/console.log"):
+    f = open("myfile.txt", "x")
+    
 with open(f"{os.getcwd()}/data/console.log", 'a') as f:
     f.write('This is a test')
 
