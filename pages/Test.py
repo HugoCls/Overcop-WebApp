@@ -39,8 +39,6 @@ if st.button('Folders & Files'):
         for fichier in fichiers:
             st.text(os.path.join(dossier_parent, fichier))
 
-
-log.basicConfig(filename=log_file_path, level=log.INFO, format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
 """
 if len(log.getLogger('').handlers) < 2:  # Vérifiez le nombre de handlers pour éviter les doublons
     temp_file_handler = log.FileHandler('data/temp_logs.log')
