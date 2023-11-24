@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 
 from sqlalchemy import create_engine
 from all_in_scrap import Scraping, get_pairs_to_scrap
@@ -46,5 +47,25 @@ st.dataframe(df_logs)
 st.title("Database")
 st.dataframe(df_stock)
 
+st.title("🚧 In Construction 🚧")
 st.title("Prices")
 st.dataframe(df_prices)
+
+folders = ''
+
+dossier_parent = os.getcwd()
+
+for dossier, sous_dossiers, fichiers in os.walk(dossier_parent):
+    folders += f'Dossier : {dossier}\n'
+
+    # Afficher tous les fichiers dans le dossier actuel
+    for fichier in fichiers:
+        chemin_fichier = os.path.join(dossier, fichier)
+        folders += f'   Fichier : {chemin_fichier}\n'
+
+    # Afficher les sous-dossiers du dossier actuel
+    for sous_dossier in sous_dossiers:
+        chemin_sous_dossier = os.path.join(dossier, sous_dossier)
+        folders += f'   Sous-dossier : {chemin_sous_dossier}\n'
+
+st.text_area("Files:", value=folders, height=min(600, folders.count('\n') + 1))
