@@ -12,12 +12,15 @@ def get_temp_logs():
     with open('data/temp_logs.log', 'r') as file:
         logs_content = file.read()
 
-    with open('data/temp_logs.log', 'w') as file:
-        file.write('')
-
     return logs_content
 
+def clean_temp_logs():
+    with open('data/temp_logs.log', 'w') as file:
+            file.write('')
+
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
+
+now = datetime.now().strftime("%Y_%m_%d")
 
 st.set_page_config(
     page_title="Overcop Data",
@@ -25,17 +28,25 @@ st.set_page_config(
     layout="wide",
 )
 
+col_1, col_2 = st.columns(2)
+
 st.markdown("# Scraper :rocket:")
 st.sidebar.markdown("# Scraper :rocket:")
+
+if st.sidebar.button('Reset') and os.path.exists(f'data/{now}'):
+    for fichier in os.listdir(f'data/{now}'):
+        chemin_fichier = os.path.join(f'data/{now}', fichier)
+        if os.path.isfile(chemin_fichier):
+            os.remove(chemin_fichier)
+
 
 uploaded_file = st.file_uploader("uploaded file",label_visibility="collapsed", type=['csv'])
 
 if uploaded_file is not None:
-
     with st.status('Currently Scraping...'):
-        
-        now = datetime.now().strftime("%Y_%m_%d")
 
+        clean_temp_logs()
+        
         if not os.path.exists(f'data/{now}'):
             os.mkdir(f'data/{now}')
             
@@ -51,17 +62,17 @@ if uploaded_file is not None:
         if os.path.exists(f"data/{Scraper.current_date}/product_export_w_new_prices.csv"):
             st.write("Scraping already done.")
         else:
-            Scraper.scrap_shoes_main_data()
             st.write("Scrap pages")
-
+            Scraper.scrap_shoes_main_data()
+            
+            st.write("Get correspondances")
             Scraper.get_correspondances()
-            st.write("Get crrespondances")
-
-            Scraper.scrap_stock_shoes_subdata()
+            
             st.write("Scrap shoes data")
-
-            Scraper.create_final_csv()
+            Scraper.scrap_stock_shoes_subdata()
+            
             st.write("Create final .csv")
+            Scraper.create_final_csv()
         
         Scraping().run()
         
@@ -78,7 +89,7 @@ if uploaded_file is not None:
             file_name="products_export_updated.csv",
             mime="text/csv",
         )
-    
+
     with col2:
         st.download_button(
             label="Download **Complete Logs**",
