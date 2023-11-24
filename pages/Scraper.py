@@ -41,6 +41,13 @@ with col_2:
             if os.path.isfile(chemin_fichier):
                 os.remove(chemin_fichier)
 
+st.sidebar.download_button(
+    label="Download **Complete Logs**",
+    data=open(f"data/console.log", "rb").read(),
+    file_name="console.log",
+    mime="text/log",
+)
+
 uploaded_file = st.file_uploader("uploaded file",label_visibility="collapsed", type=['csv'])
 
 if col_1.button('Start') and uploaded_file is not None:
@@ -89,14 +96,6 @@ if col_1.button('Start') and uploaded_file is not None:
             data=open(f"data/{now}/product_export_w_new_prices.csv", "rb").read(),
             file_name="products_export_updated.csv",
             mime="text/csv",
-        )
-
-    with col2:
-        st.download_button(
-            label="Download **Complete Logs**",
-            data=open(f"data/console.log", "rb").read(),
-            file_name="console.log",
-            mime="text/log",
         )
 
     logs_content = get_temp_logs()
