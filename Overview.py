@@ -7,6 +7,13 @@ import logging as log
 
 log.basicConfig(filename='data/console.log', level=log.INFO, format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
 
+if len(log.getLogger('').handlers) < 2:  # Vérifiez le nombre de handlers pour éviter les doublons
+    temp_file_handler = log.FileHandler('data/temp_logs.log')
+    temp_file_handler.setLevel(log.INFO)
+    temp_file_handler.setFormatter(log.Formatter('%(asctime)s [%(levelname)s] %(filename)s - %(message)s'))
+    log.getLogger('').addHandler(temp_file_handler)
+    
+
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
 colors = [["#10ef99",' '], ["#7ef6c8", '‎'], ["#b7ffe3", ' ‎'], ["#e0fff3", '‎ '], ["#f8fffc",'  '], ["#06e0f8", '‎  '], ["#7ee9f5", ' ‎ '], ["#adf0f7", '  ‎'], ["#dafafd", '‎‎'], ["#f6feff",'‎‎ '], ["#7C80FC", ' ‎‎'],  ["#ABA0F9", '‎ ‎'], ["#D6CFFF", '‎‎‎'], ["#EBE3F5", '‎   '], ["#FEFEFF", '   ‎']]

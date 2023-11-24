@@ -1,3 +1,4 @@
 save_data.py
 .streamlit
 __pycache__/*
+data/
