@@ -2,8 +2,21 @@
 import streamlit as st
 import os
 import sys
+import logging
+
+log_file_path = "/path/to/your/logfile.log"
+
+logging.basicConfig(
+    filename=log_file_path,
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s'
+)
+
+log = logging.getLogger(__name__)
+"""
 from streamlit.logger import get_logger
 log = get_logger(__name__)
+"""
 
 log_dir = os.path.join(os.getcwd(), 'data')
 log_file_path = os.path.join(log_dir, 'console.log')
