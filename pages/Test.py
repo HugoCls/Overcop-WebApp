@@ -9,14 +9,6 @@ log_file_path = os.path.join(log_dir, 'console.log')
 
 st.write(log_file_path)
 
-logging.basicConfig(
-    filename=log_file_path,
-    level=logging.INFO,
-    format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s'
-)
-
-st.text(__name__)
-
 log = logging.getLogger(__name__)
 
 if not os.path.exists(log_dir):
