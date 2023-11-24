@@ -9,4 +9,5 @@ level = "info"
 # Python's documentation for available attributes:
 # https://docs.python.org/2.6/library/logging.html#formatter-objects
 # Default: "%(asctime)s %(message)s"
-messageFormat = "%(asctime)s [%(levelname)s] %(filename)s - %(message)s"
+#messageFormat = "%(asctime)s [%(levelname)s] %(filename)s - %(message)s"
+format = "%(asctime)s [%(levelname)s] %(filename)s - %(message)s"
