@@ -15,6 +15,8 @@ logging.basicConfig(
     format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s'
 )
 
+st.text(__name__)
+
 log = logging.getLogger(__name__)
 
 if not os.path.exists(log_dir):
