@@ -3,6 +3,10 @@ import streamlit as st
 import os
 import sys
 
+
+with open(f"{os.getcwd()}/data/console.log", 'a') as f:
+    f.write('This is a test')
+
 if st.button('Folders & Files'):
     st.text(f"{os.getcwd()}")
 
@@ -16,9 +20,6 @@ st.text(f"{os.getcwd()}/data/console.log")
 
 st.text(os.path.exists(f"{os.getcwd()}/data/console.log"))
 
-with open(f"{os.getcwd()}/data/console.log", 'w') as f:
-    f.write('This is a test')
-    
 log.basicConfig(filename=f'{os.getcwd()}/data/console.log', level=log.INFO, format='%(asctime)s [%(levelname)s] %(filename)s - %(message)s')
 
 if len(log.getLogger('').handlers) < 2:  # Vérifiez le nombre de handlers pour éviter les doublons
