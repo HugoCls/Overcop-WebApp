@@ -14,8 +14,10 @@ import concurrent.futures
 from common_functions import calculate_match_percentage, get_closer_5_euros_price, format_name, is_valid_size, get_closer_sizes_price
 from sqlalchemy import create_engine
 
-import logging as log
+import logging
 import streamlit as st
+
+log = logging.getLogger(__name__)
 
 def fill_image_src(group):
 

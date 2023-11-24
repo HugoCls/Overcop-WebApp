@@ -1,25 +1,17 @@
 import streamlit as st
 import os
 import time
-import logging as log
+import logging
 
 from datetime import datetime
 from sqlalchemy import create_engine
 from wethenew_scraping_class import Scraping
 
-def get_temp_logs():
-    with open('data/temp_logs.log', 'r') as file:
-        logs_content = file.read()
-
-    return logs_content
-
-def clean_temp_logs():
-    with open('data/temp_logs.log', 'w') as file:
-            file.write('') 
-
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
 now = datetime.now().strftime("%Y_%m_%d")
+
+log = logging.getLogger(__name__)
 
 st.set_page_config(
     page_title="Overcop Data",
@@ -40,19 +32,10 @@ with col_2:
             if os.path.isfile(chemin_fichier):
                 os.remove(chemin_fichier)
 
-st.sidebar.download_button(
-    label="Download **Complete Logs**",
-    data=open(f"data/console.log", "rb").read(),
-    file_name="console.log",
-    mime="text/log",
-)
-
 uploaded_file = st.file_uploader("uploaded file",label_visibility="collapsed", type=['csv'])
 
 if col_1.button('Start') and uploaded_file is not None:
     with st.status('Currently Scraping...'):
-
-        clean_temp_logs()
 
         if not os.path.exists(f'data/{now}'):
             os.mkdir(f'data/{now}') 
@@ -96,7 +79,3 @@ if col_1.button('Start') and uploaded_file is not None:
             file_name="products_export_updated.csv",
             mime="text/csv",
         )
-
-    logs_content = get_temp_logs()
-
-    st.text_area("Logs temporaires:", value=logs_content, height=min(600, logs_content.count('\n') + 1))
