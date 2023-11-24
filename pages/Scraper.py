@@ -11,7 +11,11 @@ engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYS
 
 now = datetime.now().strftime("%Y_%m_%d")
 
+daily_data_path = os.path.join(os.getcwd(), f'data/{now}')
+
 log = logging.getLogger(__name__)
+
+log.info(os.path.join(daily_data_path, "products_export.csv"))
 
 st.set_page_config(
     page_title="Overcop Data",
@@ -36,11 +40,12 @@ uploaded_file = st.file_uploader("uploaded file",label_visibility="collapsed", t
 
 if col_1.button('Start') and uploaded_file is not None:
     with st.status('Currently Scraping...'):
+        
 
-        if not os.path.exists(f'data/{now}'):
-            os.mkdir(f'data/{now}') 
+        if not os.path.exists(daily_data_path):
+            os.mkdir(daily_data_path) 
             
-        with open(f"data/{now}/products_export.csv", "wb") as f:
+        with open(os.path.join(daily_data_path, "products_export.csv"), "wb") as f:
             f.write(uploaded_file.getvalue())
         
         t = time.time()
@@ -49,7 +54,7 @@ if col_1.button('Start') and uploaded_file is not None:
         
         Scraper = Scraping()
         
-        if os.path.exists(f"data/{Scraper.current_date}/product_export_w_new_prices.csv"):
+        if os.path.exists(os.path.join(daily_data_path, "product_export_w_new_prices.csv")):
             st.write("Scraping already done.")
         else:
             st.write("Scrap pages")
@@ -75,7 +80,7 @@ if col_1.button('Start') and uploaded_file is not None:
     with col1:
         st.download_button(
             label="Download **New Prices**",
-            data=open(f"data/{now}/product_export_w_new_prices.csv", "rb").read(),
+            data=open(os.path.join(daily_data_path, "product_export_w_new_prices.csv"), "rb").read(),
             file_name="products_export_updated.csv",
             mime="text/csv",
         )
