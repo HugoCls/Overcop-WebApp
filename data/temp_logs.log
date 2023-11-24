@@ -1,4 +1,0 @@
-2023-11-24 16:39:12,671 [INFO] Scraper.py - ___SCRAPER WTN STARTING___
-2023-11-24 16:39:16,046 [INFO] wethenew_scraping_class.py - "product_export_w_new_prices.csv" already exists, skipping wtn scrap
-2023-11-24 16:39:16,047 [INFO] Scraper.py - Proceed whole loop in 3.38s, prices are up to date.
-2023-11-24 16:39:16,047 [INFO] Scraper.py - Everything works!
