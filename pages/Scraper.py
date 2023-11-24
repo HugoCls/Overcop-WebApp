@@ -48,9 +48,11 @@ uploaded_file = st.file_uploader("uploaded file",label_visibility="collapsed", t
 if col_1.button('Start') and uploaded_file is not None:
     with st.status('Currently Scraping...'):
         
-        with open(os.path.join(daily_data_path, "products_export.csv"), "wb") as f:
-            f.write(uploaded_file.getvalue())
+        csv_file_path = os.path.join(daily_data_path, "products_export.csv")
         
+        with open(csv_file_path, "wb") as f:
+            f.write(uploaded_file.getvalue())
+                
         t = time.time()
         
         log.info('___SCRAPER WTN STARTING___')
