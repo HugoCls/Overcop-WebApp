@@ -28,25 +28,26 @@ st.set_page_config(
     layout="wide",
 )
 
-col_1, col_2 = st.columns(2)
-
 st.markdown("# Scraper :rocket:")
+
 st.sidebar.markdown("# Scraper :rocket:")
 
-if st.sidebar.button('Reset') and os.path.exists(f'data/{now}'):
-    for fichier in os.listdir(f'data/{now}'):
-        chemin_fichier = os.path.join(f'data/{now}', fichier)
-        if os.path.isfile(chemin_fichier):
-            os.remove(chemin_fichier)
+col_1, col_2 = st.sidebar.columns(2)
 
+with col_2:
+    if st.button('Reset') and os.path.exists(f'data/{now}'):
+        for fichier in os.listdir(f'data/{now}'):
+            chemin_fichier = os.path.join(f'data/{now}', fichier)
+            if os.path.isfile(chemin_fichier):
+                os.remove(chemin_fichier)
 
 uploaded_file = st.file_uploader("uploaded file",label_visibility="collapsed", type=['csv'])
 
-if uploaded_file is not None:
+if col_1.button('Start') and uploaded_file is not None:
     with st.status('Currently Scraping...'):
 
         clean_temp_logs()
-        
+
         if not os.path.exists(f'data/{now}'):
             os.mkdir(f'data/{now}')
             
@@ -101,3 +102,18 @@ if uploaded_file is not None:
     logs_content = get_temp_logs()
 
     st.text_area("Logs temporaires:", value=logs_content, height=min(600, logs_content.count('\n') + 1))
+
+dossier_parent = os.getcwd()
+
+for dossier, sous_dossiers, fichiers in os.walk(dossier_parent):
+    st.write(f'Dossier : {dossier}')
+
+    # Afficher tous les fichiers dans le dossier actuel
+    for fichier in fichiers:
+        chemin_fichier = os.path.join(dossier, fichier)
+        st.write(f'   Fichier : {chemin_fichier}')
+
+    # Afficher les sous-dossiers du dossier actuel
+    for sous_dossier in sous_dossiers:
+        chemin_sous_dossier = os.path.join(dossier, sous_dossier)
+        st.write(f'   Sous-dossier : {chemin_sous_dossier}')
