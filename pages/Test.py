@@ -4,7 +4,10 @@ import os
 import sys
 import logging
 
-log_file_path = "/path/to/your/logfile.log"
+log_dir = os.path.join(os.getcwd(), 'data')
+log_file_path = os.path.join(log_dir, 'console.log')
+
+st.write(log_file_path)
 
 logging.basicConfig(
     filename=log_file_path,
@@ -13,15 +16,6 @@ logging.basicConfig(
 )
 
 log = logging.getLogger(__name__)
-"""
-from streamlit.logger import get_logger
-log = get_logger(__name__)
-"""
-
-log_dir = os.path.join(os.getcwd(), 'data')
-log_file_path = os.path.join(log_dir, 'console.log')
-
-st.write(log_file_path)
 
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)  # Crée le répertoire s'il n'existe pas
@@ -46,6 +40,7 @@ if len(log.getLogger('').handlers) < 2:  # Vérifiez le nombre de handlers pour 
     temp_file_handler.setFormatter(log.Formatter('%(asctime)s [%(levelname)s] %(filename)s - %(message)s'))
     log.getLogger('').addHandler(temp_file_handler)
 """
+
 if st.button('Log test'):
     log.info("TEST")
 
