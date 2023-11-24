@@ -1,7 +1,7 @@
 import logging as log
 import streamlit as st
 import os
-
+"""
 if st.button('Folders & Files'):
     st.text(f"{os.getcwd()}")
 
@@ -11,8 +11,8 @@ if st.button('Folders & Files'):
         for fichier in fichiers:
             print(os.path.join(dossier_parent, fichier))
 
-
+"""
 if st.button('Log test'):
-    print("TEST")
+    #print("TEST")
     log.info("TEST")
-    print("HELLO")
+    #print("HELLO")
