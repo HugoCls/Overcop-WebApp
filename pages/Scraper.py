@@ -31,14 +31,6 @@ st.markdown("# Scraper :rocket:")
 
 st.sidebar.markdown("# Scraper :rocket:")
 
-st.text(f"{os.getcwd()}")
-
-for dossier_parent, dossiers, fichiers in os.walk(os.getcwd()):
-    for dossier in dossiers:
-        print(os.path.join(dossier_parent, dossier))
-    for fichier in fichiers:
-        print(os.path.join(dossier_parent, fichier))
-
 col_1, col_2 = st.sidebar.columns(2)
 
 with col_2:
