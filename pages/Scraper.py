@@ -15,7 +15,7 @@ def get_temp_logs():
 
 def clean_temp_logs():
     with open('data/temp_logs.log', 'w') as file:
-            file.write('')
+            file.write('') 
 
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
