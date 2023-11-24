@@ -30,4 +30,6 @@ if st.button('Log test'):
 with open('data/console.log', 'r') as file:
     logs_content = file.read()
 
+log.info("THIS IS A LOG")
+
 st.text_area("Logs temporaires:", value=logs_content, height=min(600, logs_content.count('\n') + 1))
