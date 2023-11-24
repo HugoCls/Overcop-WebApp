@@ -7,8 +7,6 @@ from datetime import datetime
 from sqlalchemy import create_engine
 from wethenew_scraping_class import Scraping
 
-st.text(f"{os.getcwd()}")
-
 def get_temp_logs():
     with open('data/temp_logs.log', 'r') as file:
         logs_content = file.read()
@@ -32,6 +30,14 @@ st.set_page_config(
 st.markdown("# Scraper :rocket:")
 
 st.sidebar.markdown("# Scraper :rocket:")
+
+st.text(f"{os.getcwd()}")
+
+for dossier_parent, dossiers, fichiers in os.walk(os.getcwd()):
+    for dossier in dossiers:
+        print(os.path.join(dossier_parent, dossier))
+    for fichier in fichiers:
+        print(os.path.join(dossier_parent, fichier))
 
 col_1, col_2 = st.sidebar.columns(2)
 
