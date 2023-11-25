@@ -11,14 +11,15 @@ engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYS
 
 now = datetime.now().strftime("%Y_%m_%d")
 
-daily_data_path = os.path.join(os.getcwd(), 'data', now)
+data_path = os.path.normpath(os.path.join(os.getcwd(), 'data'))
 
-# Vérifiez si le répertoire quotidien existe, sinon créez-le
+daily_data_path = os.path.normpath(os.path.join(data_path, now))
+
+print(data_path)
+print(daily_data_path)
+
 if not os.path.exists(daily_data_path):
-    # Vérifiez si le répertoire parent existe, sinon créez-le
-    parent_directory = os.path.join(os.getcwd(), 'data')
-    if not os.path.exists(parent_directory):
-        os.makedirs(parent_directory)
+    os.makedirs(daily_data_path)
 
 log = logging.getLogger(__name__)
 
