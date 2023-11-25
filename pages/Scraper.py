@@ -1,11 +1,14 @@
 import streamlit as st
 import os
 import time
-import logging
 
 from datetime import datetime
 from sqlalchemy import create_engine
 from wethenew_scraping_class import Scraping
+
+from streamlit import logger
+
+log = logger.get_logger('root')
 
 engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
@@ -15,15 +18,8 @@ data_path = os.path.normpath(os.path.join(os.getcwd(), 'data'))
 
 daily_data_path = os.path.normpath(os.path.join(data_path, now))
 
-print(data_path)
-print(daily_data_path)
-
 if not os.path.exists(daily_data_path):
     os.makedirs(daily_data_path)
-
-log = logging.getLogger(__name__)
-
-log.info(daily_data_path)
 
 st.set_page_config(
     page_title="Overcop Data",
