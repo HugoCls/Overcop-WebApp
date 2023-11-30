@@ -119,9 +119,6 @@ st.set_page_config(
 from streamlit import logger
 
 log = logger.get_logger('root')
-
-if st.button("Log test"):
-    log.info("This test worked")
     
 st.markdown("# Overview 📈")
 st.sidebar.markdown("# Overview 📈")
