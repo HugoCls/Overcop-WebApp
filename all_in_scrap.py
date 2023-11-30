@@ -97,7 +97,7 @@ class Scraping:
         self.all_WTN_pairs = {}
 
     def run(self):
-        self.scrape_pages()
+        self.scrap_pages()
 
         self.scrap_shoes()
         
@@ -182,7 +182,7 @@ class Scraping:
                     pass
         
 
-    def scrape_pages(self):
+    def scrap_pages(self):
         log.info("-- Starting scraping Pages --")
 
         if not os.path.exists(f"data/{self.now}/all_WTN_pairs.json"):

@@ -34,7 +34,7 @@ if uploaded_file is not None:
         
     Scraper = Scraping()
 
-    Scraper.scrape_pages()
+    Scraper.scrap_pages()
 
     correspondances_df = get_pairs_to_scrap(df, Scraper.all_WTN_pairs)
 
