@@ -127,7 +127,7 @@ class Scraping:
 
     def fetch_page_data(self, page_number):
 
-        r = httpx.get(f"https://{st.secrets['website']}/collections/all-sneakers?page={page_number}")
+        r = httpx.get(f"https://{st.secrets['website']}/collections/{self.collection}?page={page_number}")
 
         if r.status_code != 200:
             raise ValueError
@@ -141,17 +141,18 @@ class Scraping:
             href = a_el["href"]
             pair_name = a_el.text.strip()
 
-            try:
-                price_el = element.find("p").text.strip()
-                price = re.findall("(\d+)€", price_el)[0]
+            if pair_name not in self.all_WTN_pairs.keys():
+                try:
+                    price_el = element.find("p").text.strip()
+                    price = re.findall("(\d+)€", price_el)[0]
 
-                self.all_WTN_pairs[pair_name] = {
-                    "price": price,
-                    "href": href,
-                    "sizes": {}
-                }
-            except:
-                pass
+                    self.all_WTN_pairs[pair_name] = {
+                        "price": price,
+                        "href": href,
+                        "sizes": {}
+                    }
+                except:
+                    pass
 
     def fetch_pair_data(self, pair_name):
         href = self.all_WTN_pairs[pair_name]['href']
@@ -160,7 +161,7 @@ class Scraping:
 
         if r.status_code != 200:
             raise ValueError
-        
+
         soup = BeautifulSoup(r.text, "html.parser")
 
         element = soup.find('script', id='__NEXT_DATA__').text
@@ -185,24 +186,26 @@ class Scraping:
         log.info("-- Starting scraping Pages --")
 
         if not os.path.exists(f"data/{self.now}/all_WTN_pairs.json"):
-            
-            r = httpx.get(f"https://{st.secrets['website']}/collections/all-sneakers")
+            for collection in ['all-sneakers', 'selection-de-noel']:
+                self.collection = collection
 
-            if r.status_code != 200:
-                raise ValueError
-            
-            soup = BeautifulSoup(r.text, "html.parser")
+                r = httpx.get(f"https://{st.secrets['website']}/collections/{self.collection}")
 
-            selected_elements = soup.find_all(lambda tag: tag.name == 'a' and tag.get('class') and tag.get('class')[0].startswith('styles_link__') and tag.get('href') and tag.get('href').startswith('/collections/all-sneakers?page='))
-
-            nb_pages = int(selected_elements[-1].text)
-            
-            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-                page_numbers = range(1, nb_pages + 1)
-
-                futures = {executor.submit(self.fetch_page_data, page): page for page in page_numbers}
+                if r.status_code != 200:
+                    raise ValueError
                 
-                concurrent.futures.wait(futures)
+                soup = BeautifulSoup(r.text, "html.parser")
+
+                selected_elements = soup.find_all(lambda tag: tag.name == 'a' and tag.get('class') and tag.get('class')[0].startswith('styles_link__') and tag.get('href') and tag.get('href').startswith(f'/collections/{self.collection}?page='))
+
+                nb_pages = int(selected_elements[-1].text)
+                
+                with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+                    page_numbers = range(1, nb_pages + 1)
+
+                    futures = {executor.submit(self.fetch_page_data, page): page for page in page_numbers}
+                    
+                    concurrent.futures.wait(futures)
 
             with open(f"data/{self.now}/all_WTN_pairs.json", 'w') as f:
                 json.dump(self.all_WTN_pairs, f, ensure_ascii=True)
