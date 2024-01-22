@@ -24,7 +24,7 @@ st.set_page_config(
 st.markdown("# Shoes 👟")
 st.sidebar.markdown("# Shoes 👟")
 
-df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
+df_stock = pd.read_sql("SELECT * FROM `ov_Database`", con=engine)
 
 query = """
 WITH all_logs AS (

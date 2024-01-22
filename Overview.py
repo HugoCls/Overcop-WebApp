@@ -128,7 +128,7 @@ st.markdown(f'<style>{css}</style>', unsafe_allow_html=True)
 st.sidebar.write(palette_html, unsafe_allow_html=True)
 st.sidebar.write("**Newer ➞ Older**")
 
-df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
+df_stock = pd.read_sql("SELECT * FROM `ov_Database`", con=engine)
 
 query = """
 WITH all_logs AS (

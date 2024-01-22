@@ -9,7 +9,7 @@ engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYS
 
 df_logs = pd.read_sql("SELECT * FROM `Priceslogs`", con=engine)
 
-df_stock = pd.read_sql("SELECT * FROM `Database`", con=engine)
+df_stock = pd.read_sql("SELECT * FROM `ov_Database`", con=engine)
 
 df_prices = pd.read_sql("SELECT * FROM `WTN_prices`", con=engine)
 
