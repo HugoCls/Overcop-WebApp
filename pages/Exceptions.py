@@ -28,8 +28,12 @@ with col2:
     if st.button('Add'):
         with conn.session as s:
             for Name in pairs_to_add:
-                sql_expression = text(f'INSERT INTO scraping_exceptions (Name) VALUES (:name)')
-                s.execute(sql_expression, {'name': Name})
+                try:
+                    sql_expression = text(f'INSERT INTO scraping_exceptions (Name) VALUES (:name)')
+                    s.execute(sql_expression, {'name': Name})
+                    st.text(f"Added {Name}")
+                except:
+                    st.text(f"{Name} was already in exceptions")
 
             s.commit()
 
@@ -40,8 +44,8 @@ with col1:
 
 with col2:
     if st.button('Delete'):
-        with conn.session as s:
-            for Name in pairs_to_delete:
-                s.execute('DELETE FROM scraping_exceptions WHERE Name = ?;', (Name,))
-        
-            s.commit()
+        try:
+            s.execute('DELETE FROM scraping_exceptions WHERE Name = :name;', {'name': Name})
+            st.text(f"Deleted {Name}")
+        except:
+            st.text(f"{Name} was not found in exceptions")
