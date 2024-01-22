@@ -36,7 +36,7 @@ with col2:
                     st.text(f"*'{Name}'* was already in exceptions")
 
             s.commit()
-            st.rerun()
+            df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
 
 with col1:
     pairs_to_delete = st.multiselect(
@@ -52,6 +52,6 @@ with col2:
                     st.text(f"Deleted *'{Name}'*")
                 except:
                     st.text(f"*'{Name}'* was not found in exceptions")
-                    
+
             s.commit()
-            st.rerun()
+            df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
