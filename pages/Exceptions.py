@@ -27,7 +27,7 @@ with col2:
     if st.button('Add'):
         with conn.session as s:
             for Name in pairs_to_add:
-                s.execute(f'INSERT INTO scraping_exceptions (Name) VALUES (:{Name});')
+                s.execute('DELETE FROM scraping_exceptions WHERE Name = ?;', (Name,))
 
             s.commit()
 
