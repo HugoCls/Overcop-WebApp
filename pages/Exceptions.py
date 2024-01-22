@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import text
 
-conn = st.experimental_connection('overcop', type='sql')
+conn = st.connection('overcop', type='sql')
 
 st.title("Scraping Exceptions")
 
