@@ -31,7 +31,7 @@ with col2:
                 try:
                     sql_expression = text(f'INSERT INTO scraping_exceptions (Name) VALUES (:name)')
                     s.execute(sql_expression, {'name': Name})
-                    st.text(f"Added *'{Name}'*")
+                    st.text(f"Added **'{Name}'**")
                 except:
                     st.text(f"*'{Name}'* was already in exceptions")
 
