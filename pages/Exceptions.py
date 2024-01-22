@@ -6,14 +6,16 @@ conn = st.connection('overcop', type='sql')
 
 st.title("Scraping Exceptions")
 
-df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
+with conn.session as s:
+    df_scraping_exceptions = s.query('SELECT * FROM `scraping_exceptions`')
 
 Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 
 st.caption('All current Exceptions')
 st.dataframe(df_scraping_exceptions, hide_index=True, width=1000)
 
-df_Database = conn.query('SELECT * FROM `ov_Database`')
+with conn.session as s:
+    df_Database = s.query('SELECT * FROM `ov_Database`')
 
 Database_Names = list(df_Database['Name'].unique())
 
@@ -36,8 +38,6 @@ with col2:
                     st.text(f"*'{Name}'* was already in exceptions")
 
             s.commit()
-            conn = st.connection('overcop', type='sql')
-            df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
 
 with col1:
     pairs_to_delete = st.multiselect(
@@ -55,5 +55,3 @@ with col2:
                     st.text(f"*'{Name}'* was not found in exceptions")
 
             s.commit()
-            conn = st.connection('overcop', type='sql')
-            df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
