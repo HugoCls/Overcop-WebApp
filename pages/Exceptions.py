@@ -6,7 +6,7 @@ conn = st.connection('overcop', type='sql')
 
 st.title("Scraping Exceptions")
 
-df_scraping_exceptions = conn.query('SELECT * FROM overcop.scraping_exceptions')
+df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
 
 Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 
