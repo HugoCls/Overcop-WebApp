@@ -28,8 +28,8 @@ with col2:
     if st.button('Add'):
         with conn.session as s:
             for Name in pairs_to_add:
-                print(sql_expression, {'name': Name})
                 sql_expression = text('INSERT INTO scraping_exceptions (Name) VALUES (:name)')
+                print(sql_expression, {'name': Name})
                 s.execute(sql_expression, {'name': Name})
                 print(sql_expression, {'name': Name})
                 
