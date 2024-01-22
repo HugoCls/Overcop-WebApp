@@ -1,25 +1,24 @@
 import streamlit as st
 import pandas as pd
 from sqlalchemy import text
+from sqlalchemy import create_engine
 
-print(st.session_state)
+engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
 
 conn = st.connection('overcop', type='sql')
 
 st.title("Scraping Exceptions")
 
-with conn.session as s:
-    df_scraping_exceptions = s.query(text('SELECT * FROM `scraping_exceptions`'))
+df_scraping_exceptions = pd.read_sql('SELECT * FROM `scraping_exceptions`', con=engine)
 
-print(df_scraping_exceptions)
+#df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
 
 Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 
 st.caption('All current Exceptions')
 st.dataframe(df_scraping_exceptions, hide_index=True, width=1000)
 
-with conn.session as s:
-    df_Database = s.query(text('SELECT * FROM `ov_Database`'))
+df_Database = conn.query('SELECT * FROM `ov_Database`')
 
 Database_Names = list(df_Database['Name'].unique())
 
