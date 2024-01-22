@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from sqlalchemy import text
 
 conn = st.connection('overcop', type='sql')
 
@@ -28,12 +27,9 @@ with col2:
     if st.button('Add'):
         with conn.session as s:
             for Name in pairs_to_add:
-                sql_expression = text('INSERT INTO scraping_exceptions (Name) VALUES (:name)')
-                print(sql_expression, {'name': Name})
-                s.execute(sql_expression, {'name': Name})
-                print(sql_expression, {'name': Name})
-                
-        s.commit()
+                s.execute(f'INSERT INTO scraping_exceptions (Name) VALUES (:{Name});')
+
+            s.commit()
 
 with col1:
     pairs_to_delete = st.multiselect(
@@ -44,7 +40,6 @@ with col2:
     if st.button('Delete'):
         with conn.session as s:
             for Name in pairs_to_delete:
-                sql_expression = text('DELETE FROM scraping_exceptions WHERE Name = :name')
-                s.execute(sql_expression, {'name': Name})
+                s.execute('DELETE FROM scraping_exceptions WHERE Name = ?;', (Name,))
         
-        s.commit()
+            s.commit()
