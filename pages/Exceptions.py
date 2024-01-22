@@ -1,10 +1,6 @@
 import streamlit as st
 import pandas as pd
-"""
-from sqlalchemy import create_engine
 
-engine = create_engine(f'mysql://{st.secrets["MYSQL_USERNAME"]}:{st.secrets["MYSQL_PASSWORD"]}@{st.secrets["VPS_IP"]}/overcop')
-"""
 conn = st.experimental_connection('overcop', type='sql')
 
 st.title("Scraping Exceptions")
@@ -15,8 +11,6 @@ Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 
 st.caption('All current Exceptions')
 st.dataframe(df_scraping_exceptions, hide_index=True)
-
-#df_Database = pd.read_sql("SELECT * FROM `ov_Database`", con=engine)
 
 df_Database = conn.query('SELECT * FROM `ov_Database`')
 
