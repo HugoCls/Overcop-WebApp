@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import text
 
+print(st.session_state)
+
 conn = st.connection('overcop', type='sql')
 
 st.title("Scraping Exceptions")
