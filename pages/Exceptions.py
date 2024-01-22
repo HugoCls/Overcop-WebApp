@@ -40,12 +40,14 @@ with col2:
 
             s.commit()
 
-with col1:
+col1_, col2_ = st.columns([4,1])
+
+with col1_:
     pairs_to_delete = st.multiselect(
         'Select pairs delete from exceptions table',
         Exceptions_Names)
 
-with col2:
+with col2_:
     if st.button('Delete'):
         with conn.session as s:
             for Name in pairs_to_delete:
