@@ -36,6 +36,7 @@ with col2:
                     st.text(f"*'{Name}'* was already in exceptions")
 
             s.commit()
+            conn = st.connection('overcop', type='sql')
             df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
 
 with col1:
@@ -54,4 +55,5 @@ with col2:
                     st.text(f"*'{Name}'* was not found in exceptions")
 
             s.commit()
+            conn = st.connection('overcop', type='sql')
             df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
