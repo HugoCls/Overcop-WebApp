@@ -11,7 +11,7 @@ df_scraping_exceptions = conn.query('SELECT * FROM scraping_exceptions')
 Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 
 st.caption('All current Exceptions')
-st.dataframe(df_scraping_exceptions, hide_index=True)
+st.dataframe(df_scraping_exceptions)
 
 df_Database = conn.query('SELECT * FROM `ov_Database`')
 
