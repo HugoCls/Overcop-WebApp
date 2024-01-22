@@ -16,7 +16,7 @@ Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 st.caption('All current Exceptions')
 st.dataframe(df_scraping_exceptions, hide_index=True)
 
-df_Database = pd.read_sql("SELECT * FROM `Database`", con=engine)
+df_Database = pd.read_sql("SELECT * FROM `overcop.Database`", con=engine)
 
 #df_Database = conn.query('SELECT * FROM `Database`')
 
