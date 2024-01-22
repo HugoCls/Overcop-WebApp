@@ -9,11 +9,12 @@ df_scraping_exceptions = conn.query('SELECT * FROM scraping_exceptions')
 
 Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 
+st.caption('All current Exceptions')
 st.dataframe(df_scraping_exceptions, hide_index=True)
 
-df_Database = conn.query('SELECT * FROM Database')
+df_Database = conn.query('SELECT * FROM overcop.Database')
 
-Database_Names = list(df_Database['Title'].unique())
+Database_Names = list(df_Database['Name'].unique())
 
 col1, col2 = st.columns([4,1])
 
