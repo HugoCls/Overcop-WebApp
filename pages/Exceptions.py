@@ -6,7 +6,7 @@ conn = st.connection('overcop', type='sql')
 
 st.title("Scraping Exceptions")
 
-df_scraping_exceptions = conn.query('SELECT * FROM scraping_exceptions')
+df_scraping_exceptions = conn.query('SELECT * FROM overcop.scraping_exceptions')
 
 Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 
@@ -31,9 +31,9 @@ with col2:
                 try:
                     sql_expression = text(f'INSERT INTO scraping_exceptions (Name) VALUES (:name)')
                     s.execute(sql_expression, {'name': Name})
-                    st.text(f"Added {Name}")
+                    st.text(f"Added *'{Name}'*")
                 except:
-                    st.text(f"{Name} was already in exceptions")
+                    st.text(f"*'{Name}'* was already in exceptions")
 
             s.commit()
 
@@ -46,6 +46,6 @@ with col2:
     if st.button('Delete'):
         try:
             s.execute('DELETE FROM scraping_exceptions WHERE Name = :name;', {'name': Name})
-            st.text(f"Deleted {Name}")
+            st.text(f"Deleted *'{Name}'*")
         except:
-            st.text(f"{Name} was not found in exceptions")
+            st.text(f"*'{Name}'* was not found in exceptions")
