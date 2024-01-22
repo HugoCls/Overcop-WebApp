@@ -28,13 +28,13 @@ if st.button('Add'):
     with conn.session as s:
         for Name in pairs_to_add:
             try:
-                sql_expression = text(f'INSERT INTO scraping_exceptions (Name) VALUES (:name)')
-                s.execute(sql_expression, {'name': Name})
-                st.text(f"Added '{Name}'*")
+                s.execute(text(f'INSERT INTO scraping_exceptions (Name) VALUES (:name)'), {'name': Name})
+                st.text(f"- Added '{Name}'*")
             except:
-                st.text(f"'{Name}' was already in exceptions")
+                st.text(f"- '{Name}' was already in exceptions")
 
         s.commit()
+        st.rerun()
 
 pairs_to_delete = st.multiselect(
     'Select pairs delete from exceptions table',
@@ -45,8 +45,9 @@ if st.button('Delete'):
         for Name in pairs_to_delete:
             try:
                 s.execute(text('DELETE FROM scraping_exceptions WHERE Name = :name'), {'name': Name})
-                st.text(f"Deleted '{Name}'")
+                st.text(f"- Deleted '{Name}'")
             except Exception as e:
-                st.text(f"{e} '{Name}' was not found in exceptions")
+                st.text(f"- '{Name}' was not found in exceptions")
 
         s.commit()
+        st.rerun()
