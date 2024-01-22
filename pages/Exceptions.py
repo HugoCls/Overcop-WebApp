@@ -11,14 +11,10 @@ st.title("Scraping Exceptions")
 
 df_scraping_exceptions = pd.read_sql('SELECT * FROM `scraping_exceptions`', con=engine)
 
-st.text(df_scraping_exceptions.columns)
-st.dataframe(df_scraping_exceptions)
-#df_scraping_exceptions = conn.query('SELECT * FROM `scraping_exceptions`')
-
-Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
-
 st.caption('All current Exceptions')
 st.dataframe(df_scraping_exceptions, hide_index=True, width=1000)
+
+Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 
 df_Database = conn.query('SELECT * FROM `ov_Database`')
 
