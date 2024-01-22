@@ -36,6 +36,7 @@ with col2:
                     st.text(f"*'{Name}'* was already in exceptions")
 
             s.commit()
+            st.rerun()
 
 with col1:
     pairs_to_delete = st.multiselect(
@@ -51,4 +52,6 @@ with col2:
                     st.text(f"Deleted *'{Name}'*")
                 except:
                     st.text(f"*'{Name}'* was not found in exceptions")
+                    
             s.commit()
+            st.rerun()
