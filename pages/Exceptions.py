@@ -20,7 +20,7 @@ df_Database = conn.query('SELECT * FROM `ov_Database`')
 
 Database_Names = list(df_Database['Name'].unique())
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([4,1])
 
 with col1:
     pairs_to_add = st.multiselect(
