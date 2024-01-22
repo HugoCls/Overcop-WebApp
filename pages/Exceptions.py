@@ -30,6 +30,7 @@ with col2:
             for Name in pairs_to_add:
                 sql_expression = text('INSERT INTO scraping_exceptions (Name) VALUES (:name)')
                 s.execute(sql_expression, {'name': Name})
+                print(sql_expression, {'name': Name})
                 
         s.commit()
 
