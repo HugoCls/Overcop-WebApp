@@ -44,7 +44,7 @@ if st.button('Delete'):
     with conn.session as s:
         for Name in pairs_to_delete:
             try:
-                s.execute('DELETE FROM scraping_exceptions WHERE Name = :name;', {'name': Name})
+                s.execute('DELETE FROM scraping_exceptions WHERE Name = ":name";', {'name': Name})
                 st.text(f"Deleted *'{Name}'*")
             except:
                 st.text(f"*'{Name}'* was not found in exceptions")
