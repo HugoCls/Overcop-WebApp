@@ -11,6 +11,8 @@ st.title("Scraping Exceptions")
 with conn.session as s:
     df_scraping_exceptions = s.query(text('SELECT * FROM `scraping_exceptions`'))
 
+print(df_scraping_exceptions)
+
 Exceptions_Names = list(df_scraping_exceptions['Name'].unique())
 
 st.caption('All current Exceptions')
